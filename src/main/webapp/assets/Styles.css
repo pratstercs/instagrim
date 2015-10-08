@@ -16,9 +16,9 @@ nav {
 }
 
 h1 {
-    text-align: center;
+    margin: auto;
     width: 361px;
     height: 140px;
-    background: url(assets/instagrim.png);
+    background: url(instagrim.png);
     text-indent: -9999px;
 }

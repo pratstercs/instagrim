@@ -8,39 +8,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="Styles.css" />
-
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="assets/Styles.css" />
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/login.css" />
+        <title>Instagrim :: Login</title>
     </head>
     <body>
-        <header>
-        <h1>InstaGrim!</h1>
-        <h2>Your world in Black and White</h2>
-        </header>
-        <nav>
-            <ul>
+        <a href="index.jsp"><h1>InstaGrim!</h1><!--TODO centre this--></a>
                 
-                <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
-        </nav>
-       
-        <article>
-            <h3>Login</h3>
-            <form method="POST"  action="Login">
-                <ul>
-                    <li>User Name <input type="text" name="username"></li>
-                    <li>Password <input type="password" name="password"></li>
-                </ul>
-                <br/>
-                <input type="submit" value="Login"> 
-            </form>
+        <form method="POST" action="Login" class="form-login">
+            <h2 class="form-login-header">Log in:</h2>
+                <label for="inputEmail" class="sr-only">Username</label>
+                <input type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <br/>
 
-        </article>
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+                <!--<input type="submit" value="Login">-->
     </body>
 </html>

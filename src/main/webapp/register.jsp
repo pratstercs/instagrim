@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="Styles.css" />
+        <link rel="stylesheet" type="text/css" href="assets/Styles.css" />
     </head>
     <body>
         <header>
@@ -25,7 +25,7 @@
         </nav>
        
         <article>
-            <h3>Register as user</h3>
+            <h3>Register for an account:</h3>
             <form method="POST"  action="Register">
                 <ul>
                     <li>User Name <input type="text" name="username"></li>
