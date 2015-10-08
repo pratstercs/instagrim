@@ -16,7 +16,7 @@
     </head>
     <body>
         <header>
-            <h1>InstaGrim ! </h1>
+            <img src="assets/instagrim.png" alt="Instagrim" />
             <h2>Your world in Black and White</h2>
         </header>
         <nav>
