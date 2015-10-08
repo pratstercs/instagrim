@@ -18,18 +18,21 @@
         <title>Instagrim :: Login</title>
     </head>
     <body>
-        <a href="index.jsp"><h1>InstaGrim!</h1><!--TODO centre this--></a>
+        <a href="index.jsp"><h1>InstaGrim!</h1></a>
                 
         <form method="POST" action="Login" class="form-login">
             <h2 class="form-login-header">Log in:</h2>
+            
                 <label for="inputEmail" class="sr-only">Username</label>
-                <input type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" id="top" name="username" class="form-control" placeholder="Username" required autofocus>
+                
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="bottom" name="password" class="form-control" placeholder="Password" required>
+                
             <br/>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            <div class="loginRegister"><a href="register.jsp">Need to register for an account?</a></div>
         </form>
-                <!--<input type="submit" value="Login">-->
     </body>
 </html>
