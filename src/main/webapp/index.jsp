@@ -16,7 +16,7 @@
     </head>
     <body>
         <header>
-            <img src="assets/instagrim.png" alt="Instagrim" />
+            <h1>Instagrim</h1>
             <h2>Your world in Black and White</h2>
         </header>
         <nav>
@@ -42,6 +42,7 @@
                                         
                             
                     }%>
+                <li><a href="logout.jsp">Logout</a></li>
             </ul>
         </nav>
         <footer>

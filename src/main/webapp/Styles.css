@@ -14,3 +14,11 @@ nav {
     border: 2px;
     float: right;
 }
+
+h1 {
+    text-align: center;
+    width: 361px;
+    height: 140px;
+    background: url(assets/instagrim.png);
+    text-indent: -9999px;
+}

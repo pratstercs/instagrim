@@ -16,9 +16,8 @@
     </head>
     <body>
         <header>
-        
-        <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
+            <h1>InstaGrim!</h1>
+            <h2>Your world in Black and White</h2>
         </header>
         
         <nav>
@@ -29,7 +28,7 @@
         </nav>
  
         <article>
-            <h1>Your Pics</h1>
+            <h2>Your Pics</h2>
         <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
             if (lsPics == null) {
