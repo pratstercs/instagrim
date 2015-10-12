@@ -53,15 +53,10 @@ public class Login extends HttpServlet {
         
         User us=new User();
         us.setCluster(cluster);
-        boolean isValid=us.IsValidUser(username, password);
+        LoggedIn lg  = us.IsValidUser(username, password);
         HttpSession session=request.getSession();
         System.out.println("Session in servlet "+session);
-        if (isValid){
-            LoggedIn lg= new LoggedIn();
-            lg.setLogedin();
-            lg.setUsername(username);
-            //request.setAttribute("LoggedIn", lg);
-            
+        if (lg.getlogedin()){
             session.setAttribute("LoggedIn", lg);
             System.out.println("Session in servlet "+session);
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
