@@ -126,7 +126,7 @@ public class Image extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        for (Part part : request.getParts()) {
+        for (Part part : request.getParts() ) {
             System.out.println("Part Name " + part.getName());
 
             String type = part.getContentType();
