@@ -7,29 +7,29 @@
 package uk.ac.dundee.computing.aec.instagrim.models;
 
 import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.Cluster;
+//import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.ColumnDefinitions;
+//import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
-import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
+//import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 import com.datastax.driver.core.Cluster;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+//import java.io.IOException;
+//import java.io.PrintWriter;
+//import javax.servlet.RequestDispatcher;
+//import javax.servlet.ServletConfig;
+//import javax.servlet.ServletException;
+//import javax.servlet.annotation.WebServlet;
+//import javax.servlet.http.HttpServlet;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
+//import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
@@ -70,9 +70,9 @@ public class User {
         
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select * from userprofiles where login =?");
-        ResultSet rs = null;
+        //ResultSet rs;
         BoundStatement boundStatement = new BoundStatement(ps);
-        rs = session.execute( // this is where the query is executed
+        ResultSet rs = session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         username));
         
