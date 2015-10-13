@@ -32,6 +32,8 @@ import com.datastax.driver.core.Cluster;
 //import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import com.datastax.driver.core.UDTValue;
+import com.datastax.driver.core.UserType;
 
 /**
  *
@@ -41,6 +43,13 @@ public class User {
     Cluster cluster;
     public User(){
         
+    }
+    
+    //@TODO update exisiting user
+    //  -method here to actually do it
+    //  -getPost method on profile page to call this
+    public boolean updateUser() {
+        return false;
     }
     
     public boolean RegisterUser(String username, String Password, String email){
@@ -66,7 +75,6 @@ public class User {
     
     public LoggedIn getUserData(LoggedIn lg) {
         String username = lg.getUsername();
-        lg.setLogedin();
         
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select * from userprofiles where login =?");
@@ -83,6 +91,16 @@ public class User {
         lg.setFirstName(row.getString("first_name"));
         lg.setLastName(row.getString("last_name"));
         lg.setEmail(row.getString("email"));
+        
+        //@TODO debug this - ensure it works
+        String[] address = new String[3];
+        row.getMap("address", String.class, String.class).values().toArray(address);
+        lg.setAddress(address);
+        
+        //Object[] address = row.getMap("address", String.class, String.class).values()
+        //lg.setAddress(address[0].toString(), address[1].toString(), address[2].toString());
+        
+        //lg.setAddress(row., username, username);
         
         return lg;
     }
@@ -118,6 +136,7 @@ public class User {
                 if (StoredPass.compareTo(EncodedPassword) == 0) {
                     toReturn.setUsername(username);
                     LoggedIn newlg = getUserData(toReturn);
+                    newlg.setLogedin();
                     return newlg;
                 }
             }

@@ -17,6 +17,7 @@ public class LoggedIn {
     String firstName=null;
     String lastName=null;
     String email=null;
+    String[] address = new String[3];
     
     public void LoggedIn(){
         
@@ -60,6 +61,24 @@ public class LoggedIn {
     }
     public void setLogedout(){
         loggedin=false;
+    }
+    
+    public void setAddress(String[] newAddress) {
+        try {
+            setAddress(newAddress[0],newAddress[1],newAddress[2]);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds");
+        }
+    }
+    public void setAddress(String line0, String line1, String line2) {
+        address[0] = line0;
+        address[1] = line1;
+        address[2] = line2;
+        
+    }
+    public String[] getAddress() {
+        return address;
     }
     
     public void setLoginState(boolean loggedin){
