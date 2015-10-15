@@ -32,10 +32,11 @@ import com.datastax.driver.core.Cluster;
 //import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
 //import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
-import uk.ac.dundee.computing.aec.instagrim.models.User;
+//import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import com.datastax.driver.core.UDTValue;
-import com.datastax.driver.core.UserType;
+import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+//import com.datastax.driver.core.UserType;
 
 /**
  *
@@ -47,18 +48,14 @@ public class User {
         
     }
     
-    //@TODO update exisiting user
-    //  -method here to actually do it
-    //  -getPost method on profile page to call this
     public boolean updateUser(String username, String firstName, String lastName, String email) {
+        cluster = CassandraHosts.getCluster();
+        
         Session session = cluster.connect("instagrim");
         Statement st = QueryBuilder.update("instagrim","userprofiles")
-                .with(QueryBuilder.set("firstName",firstName)).and(QueryBuilder.set("lastName",lastName)).and(QueryBuilder.set("email",email))
+                .with(QueryBuilder.set("first_name",firstName)).and(QueryBuilder.set("last_name",lastName)).and(QueryBuilder.set("email",email))
                 .where(QueryBuilder.eq("login",username));
         session.execute(st);
-                
-        //PreparedStatement ps = session.prepare("SET (firstName, lastName, email) WHERE login =  ");
-        //PreparedStatement ps = session.prepare("insert into userprofiles (login,password,email) Values(?,?,?)");
         
         return false;
     }
@@ -104,9 +101,27 @@ public class User {
         lg.setEmail(row.getString("email"));
         
         //@TODO debug this - ensure it works
-        String[] address = new String[3];
-        row.getMap("address", String.class, String.class).values().toArray(address);
-        lg.setAddress(address);
+        Object[] objAddress = new Object[3];
+        String[] strAddress = new String[3];
+        
+        //for(int i = 0; i < 3; i++) {
+        //    strAddress[i] = new String();
+        //    objAddress[i] = new Object();
+        //}
+        try {
+            row.getMap("addresses", String.class, UDTValue.class).values().toArray(objAddress);
+        
+            for(int i = 0; i < 3; i++) {
+                strAddress[i] = objAddress[i].toString();
+            }
+        }
+        catch (NullPointerException e) {
+            strAddress[0] = "";
+            strAddress[1] = "";
+            strAddress[2] = "";
+        }
+        
+        lg.setAddress(strAddress);
         
         //Object[] address = row.getMap("address", String.class, String.class).values()
         //lg.setAddress(address[0].toString(), address[1].toString(), address[2].toString());
@@ -153,6 +168,7 @@ public class User {
                 String StoredPass = row.getString("password");
                 if (StoredPass.compareTo(encodedPassword) == 0) {
                     toReturn.setUsername(username);
+                    toReturn.setPassword(encodedPassword);
                     LoggedIn newlg = getUserData(toReturn);
                     newlg.setLogedin();
                     return newlg;

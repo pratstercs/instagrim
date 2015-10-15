@@ -73,7 +73,7 @@
             <!-- edit form column -->
             <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
               <h3>Personal info</h3>
-              <form class="form-horizontal" role="form">
+              <form method="POST" class="form-horizontal" role="form">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">First name:</label>
                   <div class="col-lg-8">
@@ -113,7 +113,7 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label"></label>
                   <div class="col-md-8">
-                    <input class="btn btn-primary" value="Save Changes" type="button">
+                    <input class="btn btn-primary" value="Save Changes" type="submit">
                     <span></span>
                     <input class="btn btn-default" value="Cancel" type="reset">
                   </div>

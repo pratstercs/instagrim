@@ -40,7 +40,9 @@ public class Profile extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        LoggedIn lg = (LoggedIn) request.getAttribute("LoggedIn");
+        HttpSession session=request.getSession();
+        
+        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
         boolean checkPass = false;
         
         String username = request.getParameter("username");
@@ -56,10 +58,22 @@ public class Profile extends HttpServlet{
         catch (UnsupportedEncodingException | NoSuchAlgorithmException et) {
             System.out.println( "Could not encode password " + et);
         }
-        
-        if(checkPass) {
-            //What do with inputted info?
+        catch (NullPointerException npe) {
+            System.out.println("No password inputted " + npe);
+            checkPass = false;
         }
+        
+        User us = new User();
+        
+        if(checkPass) {    
+            us.updateUser(username, firstName, lastName, email);
+        }
+        
+        LoggedIn newlg = new LoggedIn();
+        lg.setUsername(username);
+        
+        newlg = us.getUserData(lg);
+        session.setAttribute("LoggedIn", newlg);
         
 	response.sendRedirect("/Instagrim/Profile");
         

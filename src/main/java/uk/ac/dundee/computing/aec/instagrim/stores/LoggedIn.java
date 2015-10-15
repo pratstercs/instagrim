@@ -17,6 +17,7 @@ public class LoggedIn {
     String firstName=null;
     String lastName=null;
     String email=null;
+    String bio=null;
     String[] address = new String[3];
     private String encodedPass = null;
     
@@ -31,6 +32,11 @@ public class LoggedIn {
         firstName=null;
         lastName=null;
         email=null;
+        bio = null;
+        
+        for(String row : address) {
+            row = null;
+        }
     }
     
     /**
@@ -81,6 +87,7 @@ public class LoggedIn {
             setAddress(newAddress[0],newAddress[1],newAddress[2]);
         }
         catch (ArrayIndexOutOfBoundsException e) {
+            setAddress("","","");
             System.out.println("Array index out of bounds");
         }
     }
