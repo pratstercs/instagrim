@@ -51,25 +51,30 @@ public class User {
         
     }
     
-    public boolean updateUser(String username, String firstName, String lastName, String email) {
+    public boolean updateUser(String username, String firstName, String lastName, String email, String[] address) {
         cluster = CassandraHosts.getCluster();
         Session session = cluster.connect("instagrim");
         
-        String[] address = {"1 Infinite Loop", "Cupertino", "95014"};
-        
-        UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
-        UDTValue addressDB = addressUDT.newValue().setString("street", address[0]).setString("city", address[1]).setString("postcode",address[2]); 
-        Map<String, UDTValue> addressMap = new HashMap<String, UDTValue>();
-        addressMap.put("Home", addressDB);
+        try {
+            UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
+            UDTValue addressDB = addressUDT.newValue().setString("street", address[0]).setString("city", address[1]).setString("postcode",address[2]); //make new addressUDT
+            Map<String, UDTValue> addressMap = new HashMap<String, UDTValue>(); //make map to hold addressUDT
+            addressMap.put("Home", addressDB); //put into map
         
         Statement st = QueryBuilder.update("instagrim","userprofiles")
                 .with(
-                        QueryBuilder.set("first_name",firstName))
-                   .and(QueryBuilder.set("last_name",lastName))
-                   .and(QueryBuilder.set("email",email))
-                   .and(QueryBuilder.set("addresses",addressMap))
-                .where(QueryBuilder.eq("login",username));
+                            QueryBuilder.set("first_name",firstName))
+                       .and(QueryBuilder.set("last_name",lastName))
+                       .and(QueryBuilder.set("email",email))
+                       .and(QueryBuilder.set("addresses",addressMap)
+                     )
+                .where(QueryBuilder.eq ("login",username));
         session.execute(st);
+        
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            
+        }
         
         return false;
     }
@@ -114,33 +119,22 @@ public class User {
         lg.setLastName(row.getString("last_name"));
         lg.setEmail(row.getString("email"));
         
-        //@TODO debug this - ensure it works
-        Object[] objAddress = new Object[3];
+        //UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
+        
+        Object[] objAddress = row.getMap("addresses", String.class, UDTValue.class).values().toArray();
         String[] strAddress = new String[3];
         
-        //for(int i = 0; i < 3; i++) {
-        //    strAddress[i] = new String();
-        //    objAddress[i] = new Object();
-        //}
         try {
-            row.getMap("addresses", String.class, UDTValue.class).values().toArray(objAddress);
-        
-            for(int i = 0; i < 3; i++) {
-                strAddress[i] = objAddress[i].toString();
-            }
+            UDTValue address = (UDTValue)objAddress[0];
+            strAddress[0] = address.getString("street");
+            strAddress[1] = address.getString("city");
+            strAddress[2] = address.getString("postcode");
         }
-        catch (NullPointerException e) {
-            strAddress[0] = "";
-            strAddress[1] = "";
-            strAddress[2] = "";
+        catch (ArrayIndexOutOfBoundsException e) {
+            
         }
         
         lg.setAddress(strAddress);
-        
-        //Object[] address = row.getMap("address", String.class, String.class).values()
-        //lg.setAddress(address[0].toString(), address[1].toString(), address[2].toString());
-        
-        //lg.setAddress(row., username, username);
         
         return lg;
     }

@@ -52,6 +52,8 @@ public class Profile extends HttpServlet{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
+        String[] address = { request.getParameter("street"), request.getParameter("city"), request.getParameter("postcode") };
+        
         try {
             String encodedPass = User.encodePass(password);
             checkPass = lg.comparePass(encodedPass);
@@ -67,7 +69,7 @@ public class Profile extends HttpServlet{
         User us = new User();
         
         if(checkPass) {    
-            us.updateUser(username, firstName, lastName, email);
+            us.updateUser(username, firstName, lastName, email, address);
         }
         
         LoggedIn newlg = new LoggedIn();

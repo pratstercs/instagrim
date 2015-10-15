@@ -18,7 +18,8 @@ public class LoggedIn {
     String lastName=null;
     String email=null;
     String bio=null;
-    String[] address = new String[3];
+    String[] address = {"","",""};
+    String encodedAddress = null;
     private String encodedPass = null;
     
     public void LoggedIn(){
@@ -33,9 +34,11 @@ public class LoggedIn {
         lastName=null;
         email=null;
         bio = null;
+        encodedAddress = null;
+        encodedPass = null;
         
         for(String row : address) {
-            row = null;
+            row = "";
         }
     }
     
@@ -96,9 +99,28 @@ public class LoggedIn {
         address[1] = line1;
         address[2] = line2;
         
+        encodeAddress(address[0],address[1],address[2]);
     }
     public String[] getAddress() {
         return address;
+    }
+    
+    public void encodeAddress(String line1, String line2, String line3) {
+        String centre = line1 + " " + line2 + " " + line3;
+        String encodeCentre = null;
+        
+        try {
+             encodeCentre = java.net.URLEncoder.encode(centre, "UTF-8");
+        }
+        catch(java.io.UnsupportedEncodingException e) {
+            System.out.println(e);
+            encodeCentre = centre;
+        }
+        
+        encodedAddress = "https://www.google.com/maps/embed/v1/search?q=" + encodeCentre + "&key=AIzaSyAnFuPLSU9kLuXrUY9Tzkh8mv0PvxHYYxE";
+    }
+    public String getEncodedAddress() {
+        return encodedAddress;
     }
     
     public void setLoginState(boolean loggedin){

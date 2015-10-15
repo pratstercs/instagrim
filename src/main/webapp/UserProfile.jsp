@@ -19,6 +19,8 @@
                 String firstName = "";
                 String lastName = "";
                 String email = "";
+                String encodedAddress = "";
+                String[] address = new String[3];
                 
                 LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                 if (lg != null) {
@@ -26,10 +28,14 @@
                     firstName = lg.getFirstName();
                     lastName = lg.getLastName();
                     email = lg.getEmail();
+                    encodedAddress = lg.getEncodedAddress();
+                    address = lg.getAddress();
                 }
                 else {
                     username = "NOT LOGGED IN";
                 }
+                
+                
         %>
         <script>
                 //function modified from http://keithscode.com/tutorials/javascript/3-a-simple-javascript-password-validator.html
@@ -74,6 +80,12 @@
             <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
               <h3>Personal info</h3>
               <form method="POST" class="form-horizontal" role="form">
+                  <div class="form-group">
+                  <label class="col-md-3 control-label">Username:</label>
+                  <div class="col-md-8">
+                    <input name="username" class="form-control" value="<%=username%>" type="text" readonly>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">First name:</label>
                   <div class="col-lg-8">
@@ -92,12 +104,26 @@
                     <input name="email" class="form-control" value="<%=email%>" type="text">
                   </div>
                 </div>
+                  
                 <div class="form-group">
-                  <label class="col-md-3 control-label">Username:</label>
+                  <label class="col-md-3 control-label">Street:</label>
                   <div class="col-md-8">
-                    <input name="username" class="form-control" value="<%=username%>" type="text">
+                    <input name="street" id="street" class="form-control" value="<%=address[0]%>" type="text">
                   </div>
                 </div>
+                  <div class="form-group">
+                  <label class="col-md-3 control-label">City:</label>
+                  <div class="col-md-8">
+                    <input name="city" id="city" class="form-control" value="<%=address[1]%>" type="text">
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label class="col-md-3 control-label">Postcode:</label>
+                  <div class="col-md-8">
+                    <input name="postcode" id="postcode" class="form-control" value="<%=address[2]%>" type="text">
+                  </div>
+                </div>
+                  
                 <div class="form-group">
                   <label class="col-md-3 control-label">Password:</label>
                   <div class="col-md-8">
@@ -119,6 +145,7 @@
                   </div>
                 </div>
               </form>
+                  <iframe width="600" height="450" frameborder="0" style="border:0" src="<%=encodedAddress%>" allowfullscreen></iframe>
             </div>
           </div>
         </div>
