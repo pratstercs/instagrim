@@ -35,8 +35,11 @@ import com.datastax.driver.core.Cluster;
 //import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import com.datastax.driver.core.UDTValue;
+import com.datastax.driver.core.UserType;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 //import com.datastax.driver.core.UserType;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -50,10 +53,21 @@ public class User {
     
     public boolean updateUser(String username, String firstName, String lastName, String email) {
         cluster = CassandraHosts.getCluster();
-        
         Session session = cluster.connect("instagrim");
+        
+        String[] address = {"1 Infinite Loop", "Cupertino", "95014"};
+        
+        UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
+        UDTValue addressDB = addressUDT.newValue().setString("street", address[0]).setString("city", address[1]).setString("postcode",address[2]); 
+        Map<String, UDTValue> addressMap = new HashMap<String, UDTValue>();
+        addressMap.put("Home", addressDB);
+        
         Statement st = QueryBuilder.update("instagrim","userprofiles")
-                .with(QueryBuilder.set("first_name",firstName)).and(QueryBuilder.set("last_name",lastName)).and(QueryBuilder.set("email",email))
+                .with(
+                        QueryBuilder.set("first_name",firstName))
+                   .and(QueryBuilder.set("last_name",lastName))
+                   .and(QueryBuilder.set("email",email))
+                   .and(QueryBuilder.set("addresses",addressMap))
                 .where(QueryBuilder.eq("login",username));
         session.execute(st);
         
