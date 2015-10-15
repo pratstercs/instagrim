@@ -58,9 +58,9 @@ public class User {
         String[] address = {"1 Infinite Loop", "Cupertino", "95014"};
         
         UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
-        UDTValue addressDB = addressUDT.newValue().setString("street", address[0]).setString("city", address[1]).setString("postcode",address[2]); 
-        Map<String, UDTValue> addressMap = new HashMap<String, UDTValue>();
-        addressMap.put("Home", addressDB);
+        UDTValue addressDB = addressUDT.newValue().setString("street", address[0]).setString("city", address[1]).setString("postcode",address[2]); //make new addressUDT
+        Map<String, UDTValue> addressMap = new HashMap<String, UDTValue>(); //make map to hold addressUDT
+        addressMap.put("Home", addressDB); //put into map
         
         Statement st = QueryBuilder.update("instagrim","userprofiles")
                 .with(
@@ -114,33 +114,17 @@ public class User {
         lg.setLastName(row.getString("last_name"));
         lg.setEmail(row.getString("email"));
         
-        //@TODO debug this - ensure it works
-        Object[] objAddress = new Object[3];
+        //UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
+        
+        Object[] objAddress = row.getMap("addresses", String.class, UDTValue.class).values().toArray();
         String[] strAddress = new String[3];
         
-        //for(int i = 0; i < 3; i++) {
-        //    strAddress[i] = new String();
-        //    objAddress[i] = new Object();
-        //}
-        try {
-            row.getMap("addresses", String.class, UDTValue.class).values().toArray(objAddress);
-        
-            for(int i = 0; i < 3; i++) {
-                strAddress[i] = objAddress[i].toString();
-            }
-        }
-        catch (NullPointerException e) {
-            strAddress[0] = "";
-            strAddress[1] = "";
-            strAddress[2] = "";
-        }
+        UDTValue address = (UDTValue)objAddress[0];
+        strAddress[0] = address.getString("street");
+        strAddress[1] = address.getString("city");
+        strAddress[2] = address.getString("postcode");
         
         lg.setAddress(strAddress);
-        
-        //Object[] address = row.getMap("address", String.class, String.class).values()
-        //lg.setAddress(address[0].toString(), address[1].toString(), address[2].toString());
-        
-        //lg.setAddress(row., username, username);
         
         return lg;
     }

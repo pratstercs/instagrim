@@ -19,6 +19,7 @@
                 String firstName = "";
                 String lastName = "";
                 String email = "";
+                String encodedAddress = "";
                 
                 LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                 if (lg != null) {
@@ -26,10 +27,13 @@
                     firstName = lg.getFirstName();
                     lastName = lg.getLastName();
                     email = lg.getEmail();
+                    encodedAddress = lg.getEncodedAddress();
                 }
                 else {
                     username = "NOT LOGGED IN";
                 }
+                
+                
         %>
         <script>
                 //function modified from http://keithscode.com/tutorials/javascript/3-a-simple-javascript-password-validator.html
@@ -119,6 +123,7 @@
                   </div>
                 </div>
               </form>
+                  <iframe width="600" height="450" frameborder="0" style="border:0" src="<%=encodedAddress%>" allowfullscreen></iframe>
             </div>
           </div>
         </div>
