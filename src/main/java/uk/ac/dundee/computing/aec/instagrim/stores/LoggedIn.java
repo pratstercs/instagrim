@@ -21,6 +21,7 @@ public class LoggedIn {
     String[] address = {"","",""};
     String encodedAddress = null;
     private String encodedPass = null;
+    private java.util.UUID UUID=null;
     
     public void LoggedIn(){
         

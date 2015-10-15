@@ -133,9 +133,10 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">Confirm password:</label>
                   <div class="col-md-8">
-                    <input name="confPass" id="confirmPassword" class="form-control" value="" type="password">
+                    <input type="password" id="confirmPassword" name="confpass" class="form-control" placeholder="" onkeyup="checkPass(); return false;" required>
                   </div>
                 </div>
+                <div id="confirmMessage"><!--Password match text is inserted here--></div>
                 <div class="form-group">
                   <label class="col-md-3 control-label"></label>
                   <div class="col-md-8">
