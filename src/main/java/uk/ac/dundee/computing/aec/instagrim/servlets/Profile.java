@@ -8,6 +8,8 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -37,10 +39,43 @@ public class Profile extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //@todo POST DATA HERE
+        
+        LoggedIn lg = (LoggedIn) request.getAttribute("LoggedIn");
+        boolean checkPass = false;
+        
+        String username = request.getParameter("username");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        try {
+            String encodedPass = User.encodePass(password);
+            checkPass = lg.comparePass(encodedPass);
+        }
+        catch (UnsupportedEncodingException | NoSuchAlgorithmException et) {
+            System.out.println( "Could not encode password " + et);
+        }
+        
+        if(checkPass) {
+            //What do with inputted info?
+        }
+        
 	response.sendRedirect("/Instagrim/Profile");
         
     }
+    
+//    /**
+//     * Method to test if string is empty
+//     */
+//    public static boolean checkEmpty(String text) {
+//        if( text != null && !text.isEmpty() ) {
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+//    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

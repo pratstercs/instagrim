@@ -18,6 +18,7 @@ public class LoggedIn {
     String lastName=null;
     String email=null;
     String[] address = new String[3];
+    private String encodedPass = null;
     
     public void LoggedIn(){
         
@@ -30,6 +31,15 @@ public class LoggedIn {
         firstName=null;
         lastName=null;
         email=null;
+    }
+    
+    /**
+     * Compares stored encoded password with new encoded password
+     * @param compare The password, encoded the same way, to compare with
+     * @return Whether they are the identical
+     */
+    public boolean comparePass(String compare) {
+        return encodedPass.contentEquals(new StringBuffer(compare));
     }
     
     public void setUsername(String name){
@@ -61,6 +71,9 @@ public class LoggedIn {
     }
     public void setLogedout(){
         loggedin=false;
+    }
+    public void setPassword(String newPass) {
+        encodedPass = newPass;
     }
     
     public void setAddress(String[] newAddress) {

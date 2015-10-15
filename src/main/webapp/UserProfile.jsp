@@ -31,6 +31,34 @@
                     username = "NOT LOGGED IN";
                 }
         %>
+        <script>
+                //function modified from http://keithscode.com/tutorials/javascript/3-a-simple-javascript-password-validator.html
+                function checkPass()
+                {
+                    //Setting which input fields to read
+                    var pass1 = document.getElementById('inputPassword');
+                    var pass2 = document.getElementById('confirmPassword');
+                    
+                    var badColor = "#ff6666";
+                    var white = "#ffffff";
+                    
+                    //Message to display in case of non-match
+                    var message = document.getElementById('confirmMessage');
+                    message.style.color = badColor;
+                    
+                    //If passwords do not match
+                    if(pass1.value !== pass2.value){
+                        //notify user by changing background colour and displaying message
+                            pass2.style.backgroundColor = badColor;
+                            message.innerHTML = "Passwords do not match!"
+                    }
+                    else {
+                        //otherwise reset
+                        pass2.style.backgroundColor = white;
+                        message.innerHTML = "";
+                    }
+                }
+            </script>
         <div class="container" style="padding-top: 60px;">
           <h1 class="page-header">Edit Profile</h1>
           <div class="row">
@@ -49,37 +77,37 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label">First name:</label>
                   <div class="col-lg-8">
-                    <input class="form-control" value="<%=firstName%>" type="text">
+                    <input name="firstName" class="form-control" value="<%=firstName%>" type="text">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Last name:</label>
                   <div class="col-lg-8">
-                    <input class="form-control" value="<%=lastName%>" type="text">
+                    <input name="lastName" class="form-control" value="<%=lastName%>" type="text">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Email:</label>
                   <div class="col-lg-8">
-                    <input class="form-control" value="<%=email%>" type="text">
+                    <input name="email" class="form-control" value="<%=email%>" type="text">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-md-3 control-label">Username:</label>
                   <div class="col-md-8">
-                    <input class="form-control" value="<%=username%>" type="text">
+                    <input name="username" class="form-control" value="<%=username%>" type="text">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-md-3 control-label">Password:</label>
                   <div class="col-md-8">
-                    <input class="form-control" value="" type="password">
+                    <input name="password" id="inputPassword" class="form-control" value="" type="password">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-md-3 control-label">Confirm password:</label>
                   <div class="col-md-8">
-                    <input class="form-control" value="" type="password">
+                    <input name="confPass" id="confirmPassword" class="form-control" value="" type="password">
                   </div>
                 </div>
                 <div class="form-group">

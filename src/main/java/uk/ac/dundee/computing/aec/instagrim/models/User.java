@@ -8,8 +8,10 @@ package uk.ac.dundee.computing.aec.instagrim.models;
 
 import com.datastax.driver.core.BoundStatement;
 //import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.querybuilder.*;
 //import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
@@ -48,7 +50,16 @@ public class User {
     //@TODO update exisiting user
     //  -method here to actually do it
     //  -getPost method on profile page to call this
-    public boolean updateUser() {
+    public boolean updateUser(String username, String firstName, String lastName, String email) {
+        Session session = cluster.connect("instagrim");
+        Statement st = QueryBuilder.update("instagrim","userprofiles")
+                .with(QueryBuilder.set("firstName",firstName)).and(QueryBuilder.set("lastName",lastName)).and(QueryBuilder.set("email",email))
+                .where(QueryBuilder.eq("login",username));
+        session.execute(st);
+                
+        //PreparedStatement ps = session.prepare("SET (firstName, lastName, email) WHERE login =  ");
+        //PreparedStatement ps = session.prepare("insert into userprofiles (login,password,email) Values(?,?,?)");
+        
         return false;
     }
     
@@ -105,18 +116,25 @@ public class User {
         return lg;
     }
     
+    public static String encodePass(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
+        return sha1handler.SHA1(password);
+    }
+    
     public LoggedIn IsValidUser(String username, String Password){
         LoggedIn toReturn = new LoggedIn();
-        AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
-        String EncodedPassword=null;
+        String encodedPassword = null;
+        
         try {
-            EncodedPassword= sha1handler.SHA1(Password);
-        }catch (UnsupportedEncodingException | NoSuchAlgorithmException et){
+            encodedPassword = encodePass(Password);
+        }
+        catch (UnsupportedEncodingException | NoSuchAlgorithmException et){
             System.out.println("Can't check your password");
             
             toReturn.clearData();
             return toReturn;
         }
+        
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select password from userprofiles where login =?");
         ResultSet rs = null;
@@ -133,7 +151,7 @@ public class User {
             for (Row row : rs) {
                
                 String StoredPass = row.getString("password");
-                if (StoredPass.compareTo(EncodedPassword) == 0) {
+                if (StoredPass.compareTo(encodedPassword) == 0) {
                     toReturn.setUsername(username);
                     LoggedIn newlg = getUserData(toReturn);
                     newlg.setLogedin();
