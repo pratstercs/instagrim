@@ -13,6 +13,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
+        <script>
+            function submitForm(picID) {
+                var box = document.getElementById('profilePicID');
+                box.value = picID;
+                document.getElementById('form').submit();
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -23,6 +30,7 @@
         <nav>
             <ul>
                 <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
+                <li class="nav"><ul><a href="/Instagrim">Home</a></ul></li>
                 <!-- <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li> -->
             </ul>
         </nav>
@@ -42,16 +50,15 @@
                 Pic p = (Pic) iterator.next();
 
         %>
-        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
+        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><a href="#" onclick='submitForm("<%=p.getSUUID()%>")'>Use as profile picture</a><br/><%
 
             }
             }
         %>
         </article>
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
+        <form id="form" action="Image" method="POST" class="form-horizontal" role="form">
+            <input name="posttype" id="posttype" value="profilePic" type="text">
+            <input name="profilePicID" id="profilePicID" value="" type="hidden">
+        </form>
     </body>
 </html>

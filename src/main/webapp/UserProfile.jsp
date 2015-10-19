@@ -7,9 +7,8 @@
     <head>
         <title>Instagrim :: Profile</title>
         <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/bootstrap-3.2.0.min.css">
-
         <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/font-awesome-4.1.0.min.css">
-
+        <link rel="stylesheet" type="text/css" href="/assets/Styles.css" />
         <script src="http://snipplicious.com/js/jquery.js"></script>
         <script src="http://snipplicious.com/js/bootstrap.min.js"></script>
     </head>
@@ -21,6 +20,9 @@
                 String email = "";
                 String encodedAddress = "";
                 String[] address = new String[3];
+                java.util.UUID profilePic = null;
+                String picLocation = "";
+                String thumbLocation = "";
                 
                 LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                 if (lg != null) {
@@ -30,9 +32,19 @@
                     email = lg.getEmail();
                     encodedAddress = lg.getEncodedAddress();
                     address = lg.getAddress();
+                    profilePic = lg.getProfilePic();
                 }
                 else {
                     username = "NOT LOGGED IN";
+                }
+                
+                if(profilePic == null){
+                    thumbLocation = "http://www.kolkatapolice.gov.in/Icons/blank-male.JPG";
+                    picLocation = "http://www.kolkatapolice.gov.in/Icons/blank-male.JPG";
+                }
+                else {
+                    picLocation = "/Instagrim/Image/" + profilePic;
+                    thumbLocation = "/Instagrim/Thumb/" + profilePic;
                 }
                 
                 
@@ -65,15 +77,15 @@
                     }
                 }
             </script>
+            <a href="/Instagrim/"><h1>Instagrim</h1></a>
         <div class="container" style="padding-top: 60px;">
           <h1 class="page-header">Edit Profile</h1>
           <div class="row">
             <!-- left column -->
             <div class="col-md-4 col-sm-6 col-xs-12">
               <div class="text-center">
-                <img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">
-                <h6>Upload a different photo...</h6>
-                <input type="file" class="text-center center-block well well-sm">
+                  <a href="<%=picLocation%>" ><img src="<%=thumbLocation%>" class="avatar img-circle img-thumbnail" alt="avatar"></a>
+                <!--<img src="http://www.kolkatapolice.gov.in/Icons/blank-male.JPG" class="avatar img-circle img-thumbnail" alt="avatar">-->
               </div>
             </div>
             <!-- edit form column -->
@@ -146,6 +158,7 @@
                     <input class="btn btn-primary" value="Save Changes" type="submit">
                     <span></span>
                     <input class="btn btn-default" value="Cancel" type="reset">
+                    <br /><br />
                   </div>
                 </div>
               </form>

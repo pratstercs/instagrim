@@ -25,6 +25,7 @@ import org.apache.commons.fileupload.util.Streams;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
+import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
@@ -93,7 +94,8 @@ public class Image extends HttpServlet {
                 error("Bad Operator", response);
         }
     }
-
+    
+    
     private void DisplayImageList(String User, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
@@ -129,32 +131,48 @@ public class Image extends HttpServlet {
         HttpSession session=request.getSession();
         LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
         String username="majed";
+        String posttype;
+        posttype = request.getParameter("posttype");
         
-        for (Part part : request.getParts() ) {
-            System.out.println("Part Name " + part.getName());
-
-            String type = part.getContentType();
-            String filename = part.getSubmittedFileName();
-            
-            InputStream is = request.getPart(part.getName()).getInputStream();
-            int i = is.available();
-            
-            if (lg.getlogedin()){
-                username=lg.getUsername();
-            }
-            if (i > 0) {
-                byte[] b = new byte[i + 1];
-                is.read(b);
-                System.out.println("Length : " + b.length);
-                PicModel tm = new PicModel();
-                tm.setCluster(cluster);
-                tm.insertPic(b, type, filename, username);
-
-                is.close();
-            }
+        if (lg.getlogedin()){
+            username=lg.getUsername();
         }
         
-        response.sendRedirect("/Instagrim/Images/"+username);
+        if(posttype.equals("upload")) {
+            for (Part part : request.getParts() ) {
+                System.out.println("Part Name " + part.getName());
+
+                String type = part.getContentType();
+                String filename = part.getSubmittedFileName();
+
+                InputStream is = request.getPart(part.getName()).getInputStream();
+                int i = is.available();
+
+                
+                if (i > 0) {
+                    byte[] b = new byte[i + 1];
+                    is.read(b);
+                    System.out.println("Length : " + b.length);
+                    PicModel tm = new PicModel();
+                    tm.setCluster(cluster);
+                    tm.insertPic(b, type, filename, username);
+
+                    is.close();
+                }
+            }
+            response.sendRedirect("/Instagrim/Images/"+username);
+        }
+        else if (posttype.equals("profilePic")) {
+            User us = new User();
+            String id;
+            id = request.getParameter("profilePicID");
+            lg.setProfilePic(id);
+            us.updateUser(lg);
+            
+            response.sendRedirect("/Instagrim/Profile/"+username);
+        }
+        
+        
         //RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
         //     rd.forward(request, response);
 

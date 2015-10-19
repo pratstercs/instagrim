@@ -29,6 +29,7 @@
 
                 <br/>
                 <input type="submit" value="Press"> to upload the file!
+                <input name="posttype" type="hidden" value="upload">
             </form>
 
         </article>

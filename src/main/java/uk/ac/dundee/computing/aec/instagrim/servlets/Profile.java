@@ -69,7 +69,7 @@ public class Profile extends HttpServlet{
         User us = new User();
         
         if(checkPass) {    
-            us.updateUser(username, firstName, lastName, email, address);
+            us.updateUser(username, firstName, lastName, email, address, lg.getProfilePic());
         }
         
         LoggedIn newlg = new LoggedIn();

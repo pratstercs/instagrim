@@ -51,7 +51,11 @@ public class User {
         
     }
     
-    public boolean updateUser(String username, String firstName, String lastName, String email, String[] address) {
+    public boolean updateUser(LoggedIn lg) {
+        return updateUser(lg.getUsername(), lg.getFirstName(), lg.getLastName(), lg.getEmail(), lg.getAddress(), lg.getProfilePic());
+    }
+    
+    public boolean updateUser(String username, String firstName, String lastName, String email, String[] address, java.util.UUID profilePic) {
         cluster = CassandraHosts.getCluster();
         Session session = cluster.connect("instagrim");
         
@@ -66,7 +70,8 @@ public class User {
                             QueryBuilder.set("first_name",firstName))
                        .and(QueryBuilder.set("last_name",lastName))
                        .and(QueryBuilder.set("email",email))
-                       .and(QueryBuilder.set("addresses",addressMap)
+                       .and(QueryBuilder.set("addresses",addressMap))
+                       .and(QueryBuilder.set("profilepicid",profilePic)
                      )
                 .where(QueryBuilder.eq ("login",username));
         session.execute(st);
