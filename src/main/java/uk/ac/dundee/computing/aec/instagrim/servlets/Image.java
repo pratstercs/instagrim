@@ -147,7 +147,8 @@ public class Image extends HttpServlet {
 
                 InputStream is = request.getPart(part.getName()).getInputStream();
                 int i = is.available();
-
+                int mode = PicModel.NORMAL;
+                
                 
                 if (i > 0) {
                     byte[] b = new byte[i + 1];
@@ -155,7 +156,7 @@ public class Image extends HttpServlet {
                     System.out.println("Length : " + b.length);
                     PicModel tm = new PicModel();
                     tm.setCluster(cluster);
-                    tm.insertPic(b, type, filename, username);
+                    tm.insertPic(b, type, filename, username, mode);
 
                     is.close();
                 }
@@ -165,17 +166,25 @@ public class Image extends HttpServlet {
         else if (posttype.equals("profilePic")) {
             User us = new User();
             String id;
-            id = request.getParameter("profilePicID");
+            id = request.getParameter("picID");
             lg.setProfilePic(id);
             us.updateUser(lg);
             
             response.sendRedirect("/Instagrim/Profile/"+username);
         }
-        
-        
-        //RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
-        //     rd.forward(request, response);
-
+        else if(posttype.equals("filter")) {
+            int mode = Integer.parseInt(request.getParameter("filter"));
+            String picID = request.getParameter("picID");
+            
+            PicModel tm = new PicModel();
+            Pic pic = tm.getPic(Convertors.DISPLAY_IMAGE, java.util.UUID.fromString(picID));
+            
+            tm.setCluster(cluster);
+            tm.insertPic(pic.getBytes(), pic.getType(), pic.getSUUID(), username, mode);
+            
+            
+            response.sendRedirect("/Instagrim/Images/"+username);
+        }
     }
 
     private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
