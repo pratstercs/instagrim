@@ -126,6 +126,10 @@ public class Image extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session=request.getSession();
+        LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
+        String username="majed";
+        
         for (Part part : request.getParts() ) {
             System.out.println("Part Name " + part.getName());
 
@@ -134,9 +138,7 @@ public class Image extends HttpServlet {
             
             InputStream is = request.getPart(part.getName()).getInputStream();
             int i = is.available();
-            HttpSession session=request.getSession();
-            LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username="majed";
+            
             if (lg.getlogedin()){
                 username=lg.getUsername();
             }
@@ -150,9 +152,11 @@ public class Image extends HttpServlet {
 
                 is.close();
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/Images/"+username);
-             rd.forward(request, response);
         }
+        
+        response.sendRedirect("/Instagrim/Images/"+username);
+        //RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
+        //     rd.forward(request, response);
 
     }
 

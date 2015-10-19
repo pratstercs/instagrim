@@ -21,7 +21,7 @@ public class LoggedIn {
     String[] address = {"","",""};
     String encodedAddress = null;
     private String encodedPass = null;
-    private java.util.UUID UUID=null;
+    private java.util.UUID profilePic = java.util.UUID.fromString("108947a0-7658-11e5-9006-0cd2925123f0");
     
     public void LoggedIn(){
         
@@ -84,6 +84,15 @@ public class LoggedIn {
     }
     public void setPassword(String newPass) {
         encodedPass = newPass;
+    }
+    public java.util.UUID getProfilePic() {
+        return profilePic;
+    }
+    public void setProfilePic(String uuid) {
+        profilePic = java.util.UUID.fromString(uuid);
+    }
+    public void setProfilePic(java.util.UUID uuid) {
+        profilePic = uuid;
     }
     
     public void setAddress(String[] newAddress) {

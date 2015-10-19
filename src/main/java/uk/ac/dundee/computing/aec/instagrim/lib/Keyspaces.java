@@ -49,7 +49,7 @@ public final class Keyspaces {
                     + "      email text,\n"
                     + "      addresses  map<text, frozen <address>>,\n"
                     + "      bio text,\n"
-                  //+ "      profilePicId uuid,\n"
+                    + "      profilePicId uuid,\n"
                     + "  );";
             Session session = c.connect();
             try {

@@ -137,7 +137,7 @@
                   </div>
                 </div>
                 <div id="confirmMessage"><!--Password match text is inserted here--></div>
-                    <input name="confPass" id="confirmPassword" class="form-control" value="" type="password">
+                    <!--<input name="confPass" id="confirmPassword" class="form-control" value="" type="password">-->
                   </div>
                 </div>
                 <div class="form-group">

@@ -118,6 +118,7 @@ public class User {
         lg.setFirstName(row.getString("first_name"));
         lg.setLastName(row.getString("last_name"));
         lg.setEmail(row.getString("email"));
+        lg.setProfilePic(row.getUUID("profilePicId"));
         
         //UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim").getUserType("address"); //get actual UDTValue type
         
