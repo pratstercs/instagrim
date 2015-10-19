@@ -54,7 +54,6 @@ public class PicModel {
     public static final int INVERT    = 4;
 
     public void PicModel() {
-        cluster = CassandraHosts.getCluster();
     }
 
     public void setCluster(Cluster cluster) {
@@ -407,11 +406,13 @@ public class PicModel {
     }
 
         public Pic getPic(int image_type, java.util.UUID picid) {
-        int test1 = 0;
-        Session session = cluster.connect();
+        cluster = CassandraHosts.getCluster();
+        Session session = cluster.connect("instagrim");
+        
         ByteBuffer bImage = null;
         String type = null;
         int length = 0;
+        
         try {
             Convertors convertor = new Convertors();
             ResultSet rs = null;
@@ -458,6 +459,7 @@ public class PicModel {
         session.close();
         Pic p = new Pic();
         p.setPic(bImage, length, type);
+        p.setUUID(picid);
 
         return p;
 

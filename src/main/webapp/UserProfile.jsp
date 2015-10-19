@@ -157,7 +157,7 @@
                   <div class="col-md-8">
                     <input class="btn btn-primary" value="Save Changes" type="submit">
                     <span></span>
-                    <input class="btn btn-default" value="Cancel" type="reset">
+                    <!--<input class="btn btn-default" value="Cancel" type="reset">-->
                     <br /><br />
                   </div>
                 </div>

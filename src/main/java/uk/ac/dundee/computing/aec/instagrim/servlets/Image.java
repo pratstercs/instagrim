@@ -173,7 +173,9 @@ public class Image extends HttpServlet {
             response.sendRedirect("/Instagrim/Profile/"+username);
         }
         else if(posttype.equals("filter")) {
-            int mode = Integer.parseInt(request.getParameter("filter"));
+            String filterMode;
+            filterMode = request.getParameter("filterMode");
+            int mode = Integer.parseInt(filterMode);
             String picID = request.getParameter("picID");
             
             PicModel tm = new PicModel();

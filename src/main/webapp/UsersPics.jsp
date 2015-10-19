@@ -76,12 +76,12 @@
                         <td>
                             <a href="#" onclick='submitForm("<%=p.getSUUID()%>")'>Use as profile picture</a><br/><br/>
                             Select filter to apply:
-                            <select name="filter" if="filter" onchange='applyFilter("<%=p.getSUUID()%>")'>
+                            <select name="filterMode" id="filterMode" onchange='applyFilter("<%=p.getSUUID()%>")'>
                                 <option value="0">Normal</option>
                                 <option value="1">Greyscale</option>
                                 <option value="2">Sickeningly Pink</option>
-                                <option value="3">Invert</option>
-                                <option value="4">Sepia</option>
+                                <option value="3">Sepia</option>
+                                <option value="4">Invert</option>
                             </select><br /><br />
                         </td>
                     </tr> 
