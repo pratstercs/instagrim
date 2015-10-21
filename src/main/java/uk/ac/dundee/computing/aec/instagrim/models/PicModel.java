@@ -52,6 +52,8 @@ public class PicModel {
     public static final int WEIRD     = 2;
     public static final int SEPIA     = 3;
     public static final int INVERT    = 4;
+    public static final int LIGHTEN   = 5;
+    public static final int DARKEN    = 6;
 
     public void PicModel() {
     }
@@ -86,10 +88,16 @@ public class PicModel {
                     processedb = picSepia(picid.toString(),types[1]);
                     break;
                 case GREYSCALE:
-                    processedb = picdecolour(picid.toString(),types[1]);
+                    processedb = picdecolour(picid.toString(),types[1],OP_GRAYSCALE);
                     break;
                 case INVERT:
                     processedb = picInvert(picid.toString(),types[1]);
+                    break;
+                case LIGHTEN:
+                    processedb = picdecolour(picid.toString(),types[1],OP_BRIGHTER);
+                    break;
+                case DARKEN:
+                    processedb = picdecolour(picid.toString(),types[1],OP_DARKER);
                     break;
             }
             
@@ -100,7 +108,7 @@ public class PicModel {
             ByteBuffer processedbuf = ByteBuffer.wrap(processedb);
             
             int processedlength=b.length;
-            Session session = cluster.connect("instagrim");
+            Session session = cluster.connect("instagrim_PJP");
 
             PreparedStatement psInsertPic = session.prepare("insert into pics ( picid, image,thumb,processed, user, interaction_time,imagelength,thumblength,processedlength,type,name) values(?,?,?,?,?,?,?,?,?,?,?)");
             PreparedStatement psInsertPicToUser = session.prepare("insert into userpiclist ( picid, user, pic_added) values(?,?,?)");
@@ -145,7 +153,7 @@ public class PicModel {
         return null;
     }
     
-        public byte[] picConvert(String picid,String type) {
+        public byte[] picConvert(String picid, String type) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
             //BufferedImage processed = createProcessed(BI);
@@ -161,10 +169,10 @@ public class PicModel {
         return null;
     }
     
-    public byte[] picdecolour(String picid,String type) {
+    public byte[] picdecolour(String picid, String type, java.awt.image.BufferedImageOp mode) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
-            BufferedImage processed = createProcessed(BI);
+            BufferedImage processed = createProcessed(BI, mode);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(processed, type, baos);
             baos.flush();
@@ -374,15 +382,15 @@ public class PicModel {
         return pad(img, 2);
     }
     
-   public static BufferedImage createProcessed(BufferedImage img) {
+   public static BufferedImage createProcessed(BufferedImage img, java.awt.image.BufferedImageOp mode) {
         int Width=img.getWidth()-1;
-        img = resize(img, Method.SPEED, Width, OP_ANTIALIAS, OP_GRAYSCALE);
+        img = resize(img, Method.SPEED, Width, OP_ANTIALIAS, mode);
         return pad(img, 4);
     }
    
     public java.util.LinkedList<Pic> getPicsForUser(String User) {
         java.util.LinkedList<Pic> Pics = new java.util.LinkedList<>();
-        Session session = cluster.connect("instagrim");
+        Session session = cluster.connect("instagrim_PJP");
         PreparedStatement ps = session.prepare("select picid from userpiclist where user =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -407,7 +415,7 @@ public class PicModel {
 
         public Pic getPic(int image_type, java.util.UUID picid) {
         cluster = CassandraHosts.getCluster();
-        Session session = cluster.connect("instagrim");
+        Session session = cluster.connect("instagrim_PJP");
         
         ByteBuffer bImage = null;
         String type = null;
