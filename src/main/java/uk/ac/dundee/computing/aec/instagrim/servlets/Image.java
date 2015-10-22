@@ -58,7 +58,6 @@ public class Image extends HttpServlet {
         CommandsMap.put("Image", 1);
         CommandsMap.put("Images", 2);
         CommandsMap.put("Thumb", 3);
-
     }
 
     public void init(ServletConfig config) throws ServletException {

@@ -13,7 +13,7 @@
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="assets/Styles.css" />
-        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="shortcut icon" href="assets/favicon.ico" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>

@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +30,26 @@ import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
  *
  * @author Phil
  */
-@WebServlet(name = "Profile", urlPatterns = {"/Profile", "/Profile/*"})
+@WebServlet(urlPatterns = {
+    "/Profile",
+    "/Profile/*",
+    "/editProfile",
+    "/editProfile/*"
+})
+@MultipartConfig
 public class Profile extends HttpServlet{
     Cluster cluster=null;
+    private HashMap CommandsMap = new HashMap();
+    
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Profile() {
+        super();
+        // TODO Auto-generated constructor stub
+        CommandsMap.put("Profile", 1);
+        CommandsMap.put("editProfile", 2);
+    }
     
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
@@ -96,7 +115,40 @@ public class Profile extends HttpServlet{
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/UserProfile.jsp");
+        
+        String args[] = Convertors.SplitRequestPath(request);
+        int command;
+        RequestDispatcher rd;
+        
+        try {
+            command = (Integer) CommandsMap.get(args[1]);
+        } catch (Exception et) {
+            error("Bad Operator", response);
+            return;
+        }
+        switch (command) {
+            case 2:
+                rd = request.getRequestDispatcher("/EditProfile.jsp");
+                break;
+            case 1:
+                rd = request.getRequestDispatcher("/UserProfile.jsp");
+                break;
+            default:
+                rd = request.getRequestDispatcher("/UserProfile.jsp");
+                error("Bad Operator", response);
+        }
+        
+        //RequestDispatcher rd = request.getRequestDispatcher("/UserProfile.jsp");
         rd.forward(request, response);
+    }
+    
+        private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
+
+        PrintWriter out = null;
+        out = new PrintWriter(response.getOutputStream());
+        out.println("<h1>You have a an error in your input</h1>");
+        out.println("<h2>" + mess + "</h2>");
+        out.close();
+        return;
     }
 }

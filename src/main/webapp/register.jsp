@@ -11,11 +11,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="favicon.ico" />
         <link rel="stylesheet" type="text/css" href="assets/Styles.css" />
         <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/login.css" />
         <title>Instagrim :: Register</title>
+        <link rel="shortcut icon" href="assets/favicon.ico" />
     </head>
     <body>
         <a href="index.jsp"><h1>InstaGrim!</h1></a>

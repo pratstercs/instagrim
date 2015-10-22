@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
+        <link rel="shortcut icon" href="assets/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
         <script>
             function submitForm(picID) {
