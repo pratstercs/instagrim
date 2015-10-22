@@ -119,6 +119,8 @@ public class Profile extends HttpServlet{
                 rd = request.getRequestDispatcher("/EditProfile.jsp");
                 break;
             case 1:
+                LoggedIn lg = getUser(request, args);
+                request.setAttribute("user", lg);
                 rd = request.getRequestDispatcher("/UserProfile.jsp");
                 break;
             default:
@@ -130,8 +132,38 @@ public class Profile extends HttpServlet{
         rd.forward(request, response);
     }
     
-        private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
-
+    /**
+     * Method to get a LoggedIn object from the URL
+     * @param request The HTTP request
+     * @param args The split URL
+     * @return A LoggedIn object for the requested user if requested, the current user if not
+     */
+    private LoggedIn getUser(HttpServletRequest request, String[] args) {
+        try {
+            User us = new User();
+            us.setCluster(cluster);
+            LoggedIn lg = new LoggedIn();
+            
+            String username;
+            username = "";
+            for(String item : args) {
+                System.out.println("item");
+                username = item;
+            }
+            //String username;
+            username = args[2];
+            lg.setUsername(username);
+            
+            return us.getUserData(lg);
+        }
+        catch (ArrayIndexOutOfBoundsException | NullPointerException ex) {
+            System.out.println("Oops");
+            
+            return (LoggedIn)request.getAttribute("LoggedIn");
+        }
+    }
+    
+    private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = null;
         out = new PrintWriter(response.getOutputStream());
         out.println("<h1>You have a an error in your input</h1>");

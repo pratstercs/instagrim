@@ -99,7 +99,7 @@ public class User {
         return true;
     }
     
-    public LoggedIn getUserData(LoggedIn lg) {
+    public LoggedIn getUserData(LoggedIn lg) throws NullPointerException {
         String username = lg.getUsername();
         
         Session session = cluster.connect("instagrim_PJP");

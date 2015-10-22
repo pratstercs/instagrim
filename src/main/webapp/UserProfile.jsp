@@ -16,7 +16,6 @@
     </head>
     <body>
         <%
-            
             String username = "";
             String name = "";
             String email = "";
@@ -26,18 +25,22 @@
             String picLocation = "";
             String thumbLocation = "";
 
-            LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
-            if (lg != null) {
-                username = lg.getUsername();
-                name = lg.getFirstName() + " " + lg.getLastName();
-                email = lg.getEmail();
-                encodedAddress = lg.getEncodedAddress();
-                address = lg.getAddress();
-                profilePic = lg.getProfilePic();
+            LoggedIn lg = (LoggedIn) request.getAttribute("user");
+            if (lg == null) {
+                lg = (LoggedIn) session.getAttribute("LoggedIn");
             }
-            else {
-                username = "NOT LOGGED IN";
+            if (lg == null) {
+                lg = new LoggedIn();
+                lg.clearData();
+                lg.setUsername("NOT LOGGED IN");
             }
+            
+            username = lg.getUsername();
+            name = lg.getFirstName() + " " + lg.getLastName();
+            email = lg.getEmail();
+            encodedAddress = lg.getEncodedAddress();
+            address = lg.getAddress();
+            profilePic = lg.getProfilePic();
 
             if(profilePic == null){
                 thumbLocation = "/Instagrim/assets/blank.png";

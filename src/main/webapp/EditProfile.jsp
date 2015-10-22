@@ -80,7 +80,7 @@
             </script>
             <a href="/Instagrim/"><h1>Instagrim</h1></a>
         <div class="container" style="padding-top: 60px;">
-          <h1 class="page-header">Edit Profile</h1>
+          <h2 class="page-header">Edit Profile</h2>
           <div class="row">
             <!-- left column -->
             <div class="col-md-4 col-sm-6 col-xs-12">
