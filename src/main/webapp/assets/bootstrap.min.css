@@ -283,8 +283,8 @@ h2,h3{page-break-after:avoid
 
 }
 @font-face{font-family:'Glyphicons Halflings';
-src:url(/Instagrim/fonts/glyphicons-halflings-regular.eot);
-src:url(/Instagrim/fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(/Instagrim/fonts//glyphicons-halflings-regular.woff2) format('woff2'),url(/Instagrim/fonts//glyphicons-halflings-regular.woff) format('woff'),url(/Instagrim/fonts//glyphicons-halflings-regular.ttf) format('truetype'),url(/Instagrim/fonts//glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
+src:url(/InstagrimPJP/fonts/glyphicons-halflings-regular.eot);
+src:url(/InstagrimPJP/fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(/InstagrimPJP/fonts//glyphicons-halflings-regular.woff2) format('woff2'),url(/InstagrimPJP/fonts//glyphicons-halflings-regular.woff) format('woff'),url(/InstagrimPJP/fonts//glyphicons-halflings-regular.ttf) format('truetype'),url(/InstagrimPJP/fonts//glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
 }
 .glyphicon{position:relative;
 top:1px;

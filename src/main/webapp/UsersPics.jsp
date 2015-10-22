@@ -12,8 +12,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
-        <link rel="shortcut icon" href="/Instagrim/assets/favicon.ico" />
-        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
+        <link rel="shortcut icon" href="/InstagrimPJP/assets/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/Styles.css" />
         <script>
             function submitForm(picID) {
                 var box = document.getElementById('picID');
@@ -43,8 +43,8 @@
         
         <nav>
             <ul>
-                <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
-                <li class="nav"><ul><a href="/Instagrim">Home</a></ul></li>
+                <li class="nav"><a href="/InstagrimPJP/upload.jsp">Upload</a></li>
+                <li class="nav"><ul><a href="/InstagrimPJP">Home</a></ul></li>
             </ul>
         </nav>
  
@@ -71,7 +71,7 @@
                     Pic p = (Pic) iterator.next();
 
             %>
-                            <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a>
+                            <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Thumb/<%=p.getSUUID()%>"></a>
                         </td>
                         <td>
                             <a href="#" onclick='submitForm("<%=p.getSUUID()%>")'>Use as profile picture</a><br/><br/>

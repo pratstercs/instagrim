@@ -72,8 +72,8 @@ public class PicModel {
             java.util.UUID picid = convertor.getTimeUUID();
             
             //The following is a quick and dirty way of doing this, will fill the disk quickly !
-            Boolean success = (new File("/var/tmp/instagrim/")).mkdirs();
-            FileOutputStream output = new FileOutputStream(new File("/var/tmp/instagrim/" + picid));
+            Boolean success = (new File("/var/tmp/instagrimpjp/")).mkdirs();
+            FileOutputStream output = new FileOutputStream(new File("/var/tmp/instagrimpjp/" + picid));
             output.write(b);
             
             byte[] thumbb, processedb;
@@ -148,7 +148,7 @@ public class PicModel {
      * @throws IOException If the image does not exist at that location
      */
     public byte[] picresize(String picid, String type) throws IOException {
-            BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrimpjp/" + picid));
             return picresize(BI, type);
     }
     /**
@@ -181,7 +181,7 @@ public class PicModel {
      */
     public byte[] picConvert(String picid, String type) {
         try {
-            BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrimpjp/" + picid));
             //BufferedImage processed = createProcessed(BI);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(BI, type, baos);
@@ -204,7 +204,7 @@ public class PicModel {
      */
     public byte[] picdecolour(String picid, String type, java.awt.image.BufferedImageOp mode) {
         try {
-            BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrimpjp/" + picid));
             BufferedImage processed = createProcessed(BI, mode);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(processed, type, baos);
@@ -227,7 +227,7 @@ public class PicModel {
      */
     public byte[] picWeird(String picid, String type) {
         try {
-            BufferedImage img = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            BufferedImage img = ImageIO.read(new File("/var/tmp/instagrimpjp/" + picid));
 
             int sepiaIntensity = 0;
             BufferedImage sepia = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -304,7 +304,7 @@ public class PicModel {
      */
     public byte[] picSepia(String picid, String type) {
         try {
-            BufferedImage img = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            BufferedImage img = ImageIO.read(new File("/var/tmp/instagrimpjp/" + picid));
             BufferedImage sepia = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
                     // Play around with this.  20 works well and was recommended
                     //   by another developer. 0 produces black/white image
@@ -380,7 +380,7 @@ public class PicModel {
      */
     public byte[] picInvert(String picid, String type) {
         try {
-            BufferedImage img = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            BufferedImage img = ImageIO.read(new File("/var/tmp/instagrimpjp/" + picid));
             BufferedImage sepia = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
             int w = img.getWidth();

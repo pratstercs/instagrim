@@ -34,8 +34,8 @@
                             if (lg.getlogedin()) {
                     %>
 
-                <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
-                <li><a href="/Instagrim/Profile/<%=lg.getUsername()%>">Profile</a></li>
+                <li><a href="/InstagrimPJP/Images/<%=lg.getUsername()%>">Your Images</a></li>
+                <li><a href="/InstagrimPJP/Profile/<%=lg.getUsername()%>">Profile</a></li>
                 <li><a href="logout.jsp">Logout</a></li>
                     <%}
                             }else{
@@ -47,7 +47,7 @@
         </nav>
         <footer>
             <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
+                <li class="footer"><a href="/InstagrimPJP">Home</a></li>
             </ul>
         </footer>
     </body>

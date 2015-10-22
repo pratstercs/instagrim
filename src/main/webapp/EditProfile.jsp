@@ -7,9 +7,9 @@
     <head>
         <title>Instagrim :: Profile</title>
         <link rel="shortcut icon" href="assets/favicon.ico" />
-        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/font-awesome-4.1.0.min.css">
-        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
+        <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/Styles.css" />
         <script src="http://snipplicious.com/js/jquery.js"></script>
         <script src="http://snipplicious.com/js/bootstrap.min.js"></script>
     </head>
@@ -44,8 +44,8 @@
                     picLocation = "assets/blank.jpg";
                 }
                 else {
-                    picLocation = "/Instagrim/Image/" + profilePic;
-                    thumbLocation = "/Instagrim/Thumb/" + profilePic;
+                    picLocation = "/InstagrimPJP/Image/" + profilePic;
+                    thumbLocation = "/InstagrimPJP/Thumb/" + profilePic;
                 }
                 
                 
@@ -78,7 +78,7 @@
                     }
                 }
             </script>
-            <a href="/Instagrim/"><h1>Instagrim</h1></a>
+            <a href="/InstagrimPJP/"><h1>Instagrim</h1></a>
         <div class="container" style="padding-top: 60px;">
           <h2 class="page-header">Edit Profile</h2>
           <div class="row">

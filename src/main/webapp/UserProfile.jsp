@@ -6,11 +6,11 @@
 <html>
     <head>
         <title>Instagrim :: Profile</title>
-        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/font-awesome-4.1.0.min.css">
-        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/viewProfile.css" />
-        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
-        <link rel="shortcut icon" href="/Instagrim/assets/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/viewProfile.css" />
+        <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/Styles.css" />
+        <link rel="shortcut icon" href="/InstagrimPJP/assets/favicon.ico" />
         
     </head>
     <body>
@@ -42,17 +42,17 @@
             profilePic = lg.getProfilePic();
 
             if(profilePic == null){
-                thumbLocation = "/Instagrim/assets/blank.png";
-                picLocation = "/Instagrim/assets/blank.png";
+                thumbLocation = "/InstagrimPJP/assets/blank.png";
+                picLocation = "/InstagrimPJP/assets/blank.png";
             }
             else {
-                thumbLocation = "/Instagrim/Thumb/" + profilePic;
-                picLocation = "/Instagrim/Image/" + profilePic;
+                thumbLocation = "/InstagrimPJP/Thumb/" + profilePic;
+                picLocation = "/InstagrimPJP/Image/" + profilePic;
             }
 
 
         %>
-        <a href="/Instagrim/"><h1>Instagrim</h1></a>
+        <a href="/InstagrimPJP/"><h1>Instagrim</h1></a>
         <table>
             <tr>
                 <td>
@@ -89,14 +89,14 @@
                                                                 <td><a href="mailto:<%=email%>"><%=email%></a></td>
                                                     </tbody>
                                                 </table>
-                                                    <span class="pull-right"><a href="/Instagrim/Images/a/" class="btn btn-primary">My Images</a></span>
+                                                    <span class="pull-right"><a href="/InstagrimPJP/Images/a/" class="btn btn-primary">My Images</a></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="panel-footer">
-                                        <a href="/Instagrim/editProfile" data-original-title="Edit profile" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><!-- @TODO edit profile link here --><i class="glyphicon glyphicon-edit"></i></a>
+                                        <a href="/InstagrimPJP/editProfile" data-original-title="Edit profile" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><!-- @TODO edit profile link here --><i class="glyphicon glyphicon-edit"></i></a>
                                         <span class="pull-right">
-                                            <a data-original-title="Logout" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger" href="/Instagrim/logout.jsp"><i class="glyphicon glyphicon-remove"></i></a>
+                                            <a data-original-title="Logout" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger" href="/InstagrimPJP/logout.jsp"><i class="glyphicon glyphicon-remove"></i></a>
                                         </span>
                                     </div>
                                 </div>

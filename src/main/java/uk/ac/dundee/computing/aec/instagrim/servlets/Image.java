@@ -160,7 +160,7 @@ public class Image extends HttpServlet {
                     is.close();
                 }
             }
-            response.sendRedirect("/Instagrim/Images/"+username);
+            response.sendRedirect("/InstagrimPJP/Images/"+username);
         }
         else if (posttype.equals("profilePic")) {
             User us = new User();
@@ -169,7 +169,7 @@ public class Image extends HttpServlet {
             lg.setProfilePic(id);
             us.updateUser(lg);
             
-            response.sendRedirect("/Instagrim/Profile/"+username);
+            response.sendRedirect("/InstagrimPJP/Profile/"+username);
         }
         else if(posttype.equals("filter")) {
             String filterMode;
@@ -184,7 +184,7 @@ public class Image extends HttpServlet {
             tm.insertPic(pic.getBytes(), pic.getType(), pic.getSUUID(), username, mode);
             
             
-            response.sendRedirect("/Instagrim/Images/"+username);
+            response.sendRedirect("/InstagrimPJP/Images/"+username);
         }
     }
 

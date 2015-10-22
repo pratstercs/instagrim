@@ -97,7 +97,7 @@ public class Profile extends HttpServlet{
         newlg = us.getUserData(lg);
         session.setAttribute("LoggedIn", newlg);
         
-	response.sendRedirect("/Instagrim/Profile");
+	response.sendRedirect("/InstagrimPJP/Profile");
         
     }
     
