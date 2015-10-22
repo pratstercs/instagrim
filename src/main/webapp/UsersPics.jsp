@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
-        <link rel="shortcut icon" href="assets/favicon.ico" />
+        <link rel="shortcut icon" href="/Instagrim/assets/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
         <script>
             function submitForm(picID) {
@@ -45,7 +45,6 @@
             <ul>
                 <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
                 <li class="nav"><ul><a href="/Instagrim">Home</a></ul></li>
-                <!-- <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li> -->
             </ul>
         </nav>
  

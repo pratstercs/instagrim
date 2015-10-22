@@ -99,6 +99,12 @@ public class User {
         return true;
     }
     
+    /**
+     * Completes the missing data for the passed LoggedIn object
+     * @param lg The LoggedIn object to find data for
+     * @return The complete LoggedIn object
+     * @throws NullPointerException If user does not exist in database
+     */
     public LoggedIn getUserData(LoggedIn lg) throws NullPointerException {
         String username = lg.getUsername();
         

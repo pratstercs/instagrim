@@ -136,7 +136,7 @@ public class Profile extends HttpServlet{
      * Method to get a LoggedIn object from the URL
      * @param request The HTTP request
      * @param args The split URL
-     * @return A LoggedIn object for the requested user if requested, the current user if not
+     * @return A LoggedIn object for the requested user if requested, the current user if not requested
      */
     private LoggedIn getUser(HttpServletRequest request, String[] args) {
         try {
@@ -146,11 +146,6 @@ public class Profile extends HttpServlet{
             
             String username;
             username = "";
-            for(String item : args) {
-                System.out.println("item");
-                username = item;
-            }
-            //String username;
             username = args[2];
             lg.setUsername(username);
             

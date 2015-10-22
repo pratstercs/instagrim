@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/font-awesome-4.1.0.min.css">
         <link rel="stylesheet" type="text/css" href="/Instagrim/assets/viewProfile.css" />
         <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
-        <link rel="shortcut icon" href="assets/favicon.ico" />
-        <!--<script src="http://snipplicious.com/js/jquery.js"></script>-->
-        <!--<script src="http://snipplicious.com/js/bootstrap.min.js"></script>-->
+        <link rel="shortcut icon" href="/Instagrim/assets/favicon.ico" />
     </head>
     <body>
         <%
@@ -76,15 +74,6 @@
                                                             <td>Name:</td>
                                                                 <td><%=name%></td>
                                                         </tr>
-                                                        <!--
-                                                        <tr>
-                                                            <td>Date of Birth</td>
-                                                            <td>01/24/1988</td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>Gender</td>
-                                                                <td>Male</td>
-                                                        </tr>-->
                                                         <tr>
                                                             <tr>
                                                                 <td>Address</td>
