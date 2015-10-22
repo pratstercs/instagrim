@@ -37,8 +37,7 @@
     </head>
     <body>
         <header>
-            <h1>InstaGrim!</h1>
-            <h2>Your world in Black and White</h2>
+            <a href="/InstagrimPJP"><h1>InstaGrim!</h1></a>
         </header>
         
         <nav>
@@ -51,26 +50,25 @@
         <article>
             <h2>Your Pics</h2>
             <form id="form" action="Image" method="POST" class="form-horizontal" role="form">
-        <%
-            java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
-            if (lsPics == null) {
-        %>
-        <p>No Pictures found</p>
-        <%
-        } else {
-        %>
-        <table border="0">
-            <%
-                Iterator<Pic> iterator;
-                iterator = lsPics.iterator();
-                while (iterator.hasNext()) {
-            %>
-                    <tr>
-                        <td>
-            <%
-                    Pic p = (Pic) iterator.next();
-
-            %>
+                <%
+                    java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
+                    if (lsPics == null) {
+                %>
+                <p>No Pictures found</p>
+                <%
+                    } else {
+                %>
+                <table border="0">
+                    <%
+                        Iterator<Pic> iterator;
+                        iterator = lsPics.iterator();
+                        while (iterator.hasNext()) {
+                    %>
+                            <tr>
+                                <td>
+                    <%
+                            Pic p = (Pic) iterator.next();
+                    %>
                             <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Thumb/<%=p.getSUUID()%>"></a>
                         </td>
                         <td>
@@ -88,9 +86,8 @@
                         </td>
                     </tr> 
             <%
-
-                }
-                }
+                        }
+                    }
             %>
         </table>
         </article>

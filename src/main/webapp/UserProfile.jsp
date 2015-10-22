@@ -89,7 +89,7 @@
                                                                 <td><a href="mailto:<%=email%>"><%=email%></a></td>
                                                     </tbody>
                                                 </table>
-                                                    <span class="pull-right"><a href="/InstagrimPJP/Images/a/" class="btn btn-primary">My Images</a></span>
+                                                    <span class="pull-right"><a href="/InstagrimPJP/Images/<%=username%>/" class="btn btn-primary">My Images</a></span>
                                             </div>
                                         </div>
                                     </div>

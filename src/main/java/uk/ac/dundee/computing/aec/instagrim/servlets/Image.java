@@ -84,7 +84,12 @@ public class Image extends HttpServlet {
                 DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);
                 break;
             case 2:
-                DisplayImageList(args[2], request, response);
+                try {
+                    DisplayImageList(args[2], request, response);
+                }
+                catch (NullPointerException npe) {
+                    DisplayImageList("a",request,response);
+                }
                 break;
             case 3:
                 DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
@@ -126,6 +131,7 @@ public class Image extends HttpServlet {
         out.close();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
         LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
