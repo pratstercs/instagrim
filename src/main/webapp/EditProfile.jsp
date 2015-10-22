@@ -7,7 +7,7 @@
     <head>
         <title>Instagrim :: Profile</title>
         <link rel="shortcut icon" href="assets/favicon.ico" />
-        <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/bootstrap-3.2.0.min.css">
+        <link rel="stylesheet" type="text/css" href="/Instagrim/assets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="http://snipplicious.com/css/font-awesome-4.1.0.min.css">
         <link rel="stylesheet" type="text/css" href="/Instagrim/assets/Styles.css" />
         <script src="http://snipplicious.com/js/jquery.js"></script>
