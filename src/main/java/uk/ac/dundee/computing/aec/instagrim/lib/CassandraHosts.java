@@ -4,25 +4,12 @@ import com.datastax.driver.core.*;
 
 import java.util.Iterator;
 import java.util.Set;
-//import java.util.ArrayList;
-//import java.util.List;
 
-/**
- * ********************************************************
- *
- *
- * @author administrator
- *
- * Hosts are 192.168.2.10 Seed for Vagrant hosts
- *
- *
- *
- *
- */
+
 public final class CassandraHosts {
 
     private static Cluster cluster;
-    static String Host = "127.0.0.1";  //at least one starting point to talk to
+    static String Host = "127.0.0.1"; //using a local DB host
 
     public CassandraHosts() {
 

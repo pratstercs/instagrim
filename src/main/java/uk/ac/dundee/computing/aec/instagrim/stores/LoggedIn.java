@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.dundee.computing.aec.instagrim.stores;
 
 /**
- *
- * @author Administrator
+ * Class to store the data for the currently logged in user.
+ * Also can be used for other users not logged in (misnamed, really)
  */
 public class LoggedIn {
     boolean loggedin=false;
@@ -23,10 +17,16 @@ public class LoggedIn {
     private String encodedPass = null;
     private java.util.UUID profilePic = java.util.UUID.fromString("108947a0-7658-11e5-9006-0cd2925123f0");
     
+    /**
+     * Constructor
+     */
     public void LoggedIn(){
         
     }
     
+    /**
+     * Clears all stored data
+     */
     public void clearData() {
         loggedin=false;
     
@@ -115,6 +115,9 @@ public class LoggedIn {
         return address;
     }
     
+    /**
+     * Encodes the lines of the address into a Google Maps URL 
+     */
     public void encodeAddress(String line1, String line2, String line3) {
         String centre = line1 + " " + line2 + " " + line3;
         String encodeCentre = null;

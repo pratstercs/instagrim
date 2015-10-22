@@ -128,15 +128,35 @@ public class PicModel {
         }
     }
     
+    /**
+     * Accessor method for picResize using a byte array
+     * @param pic The byte array to resize
+     * @param type The type of the image
+     * @return The resized image as a byte array
+     * @throws IOException If image stream does not exist
+     */
     public byte[] picresize(byte[] pic, String type) throws IOException {
             InputStream in = new java.io.ByteArrayInputStream(pic);
             BufferedImage bImageFromConvert = ImageIO.read(in);
             return picresize(bImageFromConvert, type);
     }
+    /**
+     * Accessor method for picResize using a String for the image's location
+     * @param picid The image's location
+     * @param type The type of the image
+     * @return The resized image as a byte array
+     * @throws IOException If the image does not exist at that location
+     */
     public byte[] picresize(String picid, String type) throws IOException {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
             return picresize(BI, type);
     }
+    /**
+     * Resizes images when passed a BufferedImage
+     * @param pic The image to resize
+     * @param type The type of the image
+     * @return The resized image as a byte array
+     */
     private byte[] picresize(BufferedImage pic, String type) {
         try {
             BufferedImage thumbnail = createThumbnail(pic);
@@ -153,7 +173,13 @@ public class PicModel {
         return null;
     }
     
-        public byte[] picConvert(String picid, String type) {
+    /**
+     * Converts a picture stored on disk to a byte array
+     * @param picid The image's location on disk
+     * @param type The type of image
+     * @return The converted picture as a byte array
+     */
+    public byte[] picConvert(String picid, String type) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
             //BufferedImage processed = createProcessed(BI);
@@ -169,6 +195,13 @@ public class PicModel {
         return null;
     }
     
+    /**
+     * Transforms the colours of an image
+     * @param picid The image to transform
+     * @param type The type of image
+     * @param mode The transformation to perform
+     * @return The transformed image as a byte array
+     */
     public byte[] picdecolour(String picid, String type, java.awt.image.BufferedImageOp mode) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
@@ -186,7 +219,11 @@ public class PicModel {
     }
     
     /**
+     * Transforms the colours of an image to a pink-ish mix
      * Adapted from picSepia
+     * @param picid The image to transform
+     * @param type The type of image
+     * @return The transformed image as a byte array
      */
     public byte[] picWeird(String picid, String type) {
         try {
@@ -258,6 +295,10 @@ public class PicModel {
     }
 
     /**
+     * Transforms an image into sepia
+     * @param picid The image to transform
+     * @param type The type of image
+     * @return The transformed image as a byte array
      * Adapted from http://stackoverflow.com/questions/21899824/java-convert-a-greyscale-and-sepia-version-of-an-image-with-bufferedimage
      * In turn from https://groups.google.com/forum/#!topic/comp.lang.java.programmer/nSCnLECxGdA
      */
@@ -331,6 +372,12 @@ public class PicModel {
         }
     }
     
+    /**
+     * Inverts the colours of an image by RGB value (255 to 0, etc)
+     * @param picid The image to transform
+     * @param type the type of the image
+     * @return The transformed picture as a byte array
+     */
     public byte[] picInvert(String picid, String type) {
         try {
             BufferedImage img = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
@@ -376,18 +423,34 @@ public class PicModel {
         }
     }
     
+    /**
+     * Resizes and antialiases an image into a thumbnail
+     * @param img The image to transform
+     * @return The thumbnail of the image
+     */
     public static BufferedImage createThumbnail(BufferedImage img) {
         img = resize(img, Method.SPEED, 250, OP_ANTIALIAS);
         // Let's add a little border before we return result.
         return pad(img, 2);
     }
     
-   public static BufferedImage createProcessed(BufferedImage img, java.awt.image.BufferedImageOp mode) {
+    /**
+     * Processes image - resizes, performs anti-aliasing and adds a small border
+     * @param img The image to process
+     * @param mode The operation to perform
+     * @return The processed image
+     */
+    public static BufferedImage createProcessed(BufferedImage img, java.awt.image.BufferedImageOp mode) {
         int Width=img.getWidth()-1;
         img = resize(img, Method.SPEED, Width, OP_ANTIALIAS, mode);
         return pad(img, 4);
     }
    
+    /**
+     * Returns a list of all the user's images
+     * @param User the user to return images for
+     * @return A linked list of all the user's pictures
+     */
     public java.util.LinkedList<Pic> getPicsForUser(String User) {
         java.util.LinkedList<Pic> Pics = new java.util.LinkedList<>();
         Session session = cluster.connect("instagrim_PJP");
@@ -413,7 +476,13 @@ public class PicModel {
         return Pics;
     }
 
-        public Pic getPic(int image_type, java.util.UUID picid) {
+    /**
+     * Returns an image by UUID
+     * @param image_type The type of image
+     * @param picid The UUID of the image to return
+     * @return The picture specified
+     */
+    public Pic getPic(int image_type, java.util.UUID picid) {
         cluster = CassandraHosts.getCluster();
         Session session = cluster.connect("instagrim_PJP");
         
@@ -470,7 +539,6 @@ public class PicModel {
         p.setUUID(picid);
 
         return p;
-
     }
 
 }

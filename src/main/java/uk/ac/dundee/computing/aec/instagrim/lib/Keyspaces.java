@@ -1,8 +1,5 @@
 package uk.ac.dundee.computing.aec.instagrim.lib;
 
-//import java.util.ArrayList;
-//import java.util.List;
-
 import com.datastax.driver.core.*;
 
 public final class Keyspaces {
@@ -11,9 +8,12 @@ public final class Keyspaces {
 
     }
 
+    /**
+     * Configures the keyspaces for the program
+     * @param c The Cassandra cluster to use
+     */
     public static void SetUpKeySpaces(Cluster c) {
         try {
-            //Add some keyspaces here
             String createkeyspace = "create keyspace if not exists instagrim_PJP  WITH replication = {'class':'SimpleStrategy', 'replication_factor':1}";
             String CreatePicTable = "CREATE TABLE if not exists instagrim_PJP.Pics ("
                     + " user varchar,"

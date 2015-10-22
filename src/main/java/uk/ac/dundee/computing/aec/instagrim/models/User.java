@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.dundee.computing.aec.instagrim.models;
 
 import com.datastax.driver.core.BoundStatement;
-//import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
@@ -145,11 +139,24 @@ public class User {
         return lg;
     }
     
+    /**
+     * Encodes the password into a SHA1 encoded string
+     * @param password The plaintext password to encode
+     * @return A SHA1 encoded string of the password
+     * @throws UnsupportedEncodingException Could not encode the password
+     * @throws NoSuchAlgorithmException SHA1 does not exist
+     */
     public static String encodePass(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
         return sha1handler.SHA1(password);
     }
     
+    /**
+     * Checks if the user is valid in the database and returns a LoggedIn object for the user's data
+     * @param username The username to check
+     * @param Password The password to check
+     * @return The LoggedIn object for that user - null if user does not exist
+     */
     public LoggedIn IsValidUser(String username, String Password){
         LoggedIn toReturn = new LoggedIn();
         String encodedPassword = null;

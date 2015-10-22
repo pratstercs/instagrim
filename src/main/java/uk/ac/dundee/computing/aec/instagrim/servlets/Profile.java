@@ -101,18 +101,6 @@ public class Profile extends HttpServlet{
         
     }
     
-//    /**
-//     * Method to test if string is empty
-//     */
-//    public static boolean checkEmpty(String text) {
-//        if( text != null && !text.isEmpty() ) {
-//            return false;
-//        }
-//        else {
-//            return true;
-//        }
-//    }
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
