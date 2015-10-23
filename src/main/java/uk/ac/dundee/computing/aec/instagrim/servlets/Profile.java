@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
+import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 
@@ -121,6 +123,12 @@ public class Profile extends HttpServlet{
             case 1:
                 LoggedIn lg = getUser(request, args);
                 request.setAttribute("user", lg);
+                
+                PicModel tm = new PicModel();
+                tm.setCluster(cluster);
+                java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(lg.getUsername());
+                request.setAttribute("Pics", lsPics);
+                
                 rd = request.getRequestDispatcher("/UserProfile.jsp");
                 break;
             default:

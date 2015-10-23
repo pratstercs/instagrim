@@ -11,9 +11,8 @@
         <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/viewProfile.css" />
         <link rel="stylesheet" type="text/css" href="/InstagrimPJP/assets/Styles.css" />
         <link rel="shortcut icon" href="/InstagrimPJP/assets/favicon.ico" />
-        
     </head>
-    <body>
+    <body>  
         <%
             String username = "";
             String name = "";
@@ -109,5 +108,36 @@
                 </td>
             </tr>
         </table>
+        <br /><br /><br />
+        <table>
+            <tr>
+                <%
+                    java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
+                    if (lsPics == null) {
+                        //no pictures found
+                    } else {
+                        int count = -1;
+                        Iterator<Pic> iterator;
+                        iterator = lsPics.iterator();
+                        while (iterator.hasNext()) {
+                            count++;
+                            
+                            if( ((count % 4) == 0) && (count != 0)) {
+                                %>
+                                </tr>
+                                <tr>
+                                <%
+                            }
+                            
+                            Pic p = (Pic) iterator.next();
+                            %>
+                            <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Thumb/<%=p.getSUUID()%>"></a>
+                            <%
+                        }
+                    }
+                %>
+            </tr>
+        </table>
+        
     </body>
 </html>
