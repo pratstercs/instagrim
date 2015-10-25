@@ -473,6 +473,8 @@ public class PicModel {
 
             }
         }
+        session.close();
+        
         return Pics;
     }
     
@@ -484,13 +486,15 @@ public class PicModel {
         
         PreparedStatement ps = session.prepare("select user,pic_added from userpiclist where picid =?");
         BoundStatement boundStatement = new BoundStatement(ps);
-            ResultSet rs = session.execute( boundStatement.bind(uuid) );
-            
-            Row row = rs.one();
-            toReturn[0] = row.getString("user");
-            toReturn[1] = row.getString("pic_added");
-            
-            return toReturn;
+        ResultSet rs = session.execute( boundStatement.bind(uuid) );
+
+        Row row = rs.one();
+        toReturn[0] = row.getString("user");
+        toReturn[1] = row.getString("pic_added");
+
+        session.close();
+        
+        return toReturn;
     }
 
     /**
@@ -526,15 +530,6 @@ public class PicModel {
                     break;
                 default: break;
             }
-//            
-//            if (image_type == Convertors.DISPLAY_IMAGE) {
-//                
-//                ps = session.prepare("select image,imagelength,type from pics where picid =?");
-//            } else if (image_type == Convertors.DISPLAY_THUMB) {
-//                ps = session.prepare("select thumb,imagelength,thumblength,type from pics where picid =?");
-//            } else if (image_type == Convertors.DISPLAY_PROCESSED) {
-//                ps = session.prepare("select processed,processedlength,type from pics where picid =?");
-//            }
             
             BoundStatement boundStatement = new BoundStatement(ps);
             rs = session.execute( // this is where the query is executed
@@ -561,20 +556,9 @@ public class PicModel {
                             break;
                         default: break;
                     }
+                    
                     user = row.getString("user");
                     date = row.getString("interaction_time");
-//                    if (image_type == Convertors.DISPLAY_IMAGE) {
-//                        bImage = row.getBytes("image");
-//                        length = row.getInt("imagelength");
-//                    } else if (image_type == Convertors.DISPLAY_THUMB) {
-//                        bImage = row.getBytes("thumb");
-//                        length = row.getInt("thumblength");
-//                
-//                    } else if (image_type == Convertors.DISPLAY_PROCESSED) {
-//                        bImage = row.getBytes("processed");
-//                        length = row.getInt("processedlength");
-//                    }
-                    
                     type = row.getString("type");
 
                 }
@@ -583,7 +567,9 @@ public class PicModel {
             System.out.println("Can't get Pic" + et);
             return null;
         }
-        session.close();
+        finally {
+            session.close();   
+        }
         
         Pic p = new Pic();
         p.setPic(bImage, length, type, user, date);

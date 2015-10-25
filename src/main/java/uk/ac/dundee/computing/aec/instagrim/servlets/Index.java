@@ -27,6 +27,7 @@ public class Index {
         Row row = rs.one();
         Pic pic = new Pic();
         
+        session.close();
         return pic.getSUUID();
     }
 

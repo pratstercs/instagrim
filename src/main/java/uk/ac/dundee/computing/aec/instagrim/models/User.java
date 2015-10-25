@@ -74,6 +74,10 @@ public class User {
         catch (ArrayIndexOutOfBoundsException e) {
             
         }
+        finally {
+            session.close();
+        }
+        
         
         return false;
     }
@@ -91,12 +95,16 @@ public class User {
         PreparedStatement ps = session.prepare("insert into userprofiles (login,password,email) Values(?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
-        session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword,email));
-        //We are assuming this always works.  Also a transaction would be good here !
+        ResultSet rs = session.execute( boundStatement.bind( username,EncodedPassword,email) );
         
-        return true;
+        session.close();
+        
+        if ( rs.getAvailableWithoutFetching() == 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     
     /**
@@ -110,11 +118,8 @@ public class User {
         
         Session session = cluster.connect("instagrim_PJP");
         PreparedStatement ps = session.prepare("select * from userprofiles where login =?");
-        //ResultSet rs;
         BoundStatement boundStatement = new BoundStatement(ps);
-        ResultSet rs = session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        username));
+        ResultSet rs = session.execute( boundStatement.bind(username) );
         
         //convert result database to single row
         Row row = rs.one();
@@ -124,8 +129,6 @@ public class User {
         lg.setLastName(row.getString("last_name"));
         lg.setEmail(row.getString("email"));
         lg.setProfilePic(row.getUUID("profilePicId"));
-        
-        //UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim_PJP").getUserType("address"); //get actual UDTValue type
         
         Object[] objAddress = row.getMap("addresses", String.class, UDTValue.class).values().toArray();
         String[] strAddress = new String[3];
@@ -141,6 +144,8 @@ public class User {
         }
         
         lg.setAddress(strAddress);
+        
+        session.close();
         
         return lg;
     }
@@ -202,9 +207,10 @@ public class User {
                 }
             }
         }
+        session.close();
     
-    toReturn.clearData();
-    return toReturn;
+        toReturn.clearData();
+        return toReturn;
     }
     
        public void setCluster(Cluster cluster) {
