@@ -475,6 +475,24 @@ public class PicModel {
         }
         return Pics;
     }
+    
+    public String[] getData(String picid) {
+        String[] toReturn = new String[2];
+        cluster = CassandraHosts.getCluster();
+        Session session = cluster.connect("instagrim_PJP");
+        
+        PreparedStatement ps = session.prepare("select user,pic_added from pics where picid =?");
+        BoundStatement boundStatement = new BoundStatement(ps);
+            ResultSet rs = session.execute( // this is where the query is executed
+                    boundStatement.bind( // here you are binding the 'boundStatement'
+                            picid));
+            
+            Row row = rs.one();
+            toReturn[0] = row.getString("user");
+            toReturn[1] = row.getString("pic_added");
+            
+            return toReturn;
+    }
 
     /**
      * Returns an image by UUID
@@ -495,14 +513,28 @@ public class PicModel {
             ResultSet rs = null;
             PreparedStatement ps = null;
          
-            if (image_type == Convertors.DISPLAY_IMAGE) {
-                
-                ps = session.prepare("select image,imagelength,type from pics where picid =?");
-            } else if (image_type == Convertors.DISPLAY_THUMB) {
-                ps = session.prepare("select thumb,imagelength,thumblength,type from pics where picid =?");
-            } else if (image_type == Convertors.DISPLAY_PROCESSED) {
-                ps = session.prepare("select processed,processedlength,type from pics where picid =?");
+            switch(image_type) {
+                case Convertors.DISPLAY_IMAGE: 
+                    ps = session.prepare("select image,imagelength,type from pics where picid =?");
+                    break;
+                case Convertors.DISPLAY_THUMB:
+                    ps = session.prepare("select thumb,imagelength,thumblength,type from pics where picid =?");
+                    break;
+                case Convertors.DISPLAY_PROCESSED:
+                    ps = session.prepare("select processed,processedlength,type from pics where picid =?");
+                    break;
+                default: break;
             }
+//            
+//            if (image_type == Convertors.DISPLAY_IMAGE) {
+//                
+//                ps = session.prepare("select image,imagelength,type from pics where picid =?");
+//            } else if (image_type == Convertors.DISPLAY_THUMB) {
+//                ps = session.prepare("select thumb,imagelength,thumblength,type from pics where picid =?");
+//            } else if (image_type == Convertors.DISPLAY_PROCESSED) {
+//                ps = session.prepare("select processed,processedlength,type from pics where picid =?");
+//            }
+            
             BoundStatement boundStatement = new BoundStatement(ps);
             rs = session.execute( // this is where the query is executed
                     boundStatement.bind( // here you are binding the 'boundStatement'
@@ -513,17 +545,32 @@ public class PicModel {
                 return null;
             } else {
                 for (Row row : rs) {
-                    if (image_type == Convertors.DISPLAY_IMAGE) {
-                        bImage = row.getBytes("image");
-                        length = row.getInt("imagelength");
-                    } else if (image_type == Convertors.DISPLAY_THUMB) {
-                        bImage = row.getBytes("thumb");
-                        length = row.getInt("thumblength");
-                
-                    } else if (image_type == Convertors.DISPLAY_PROCESSED) {
-                        bImage = row.getBytes("processed");
-                        length = row.getInt("processedlength");
+                    switch(image_type) {
+                        case Convertors.DISPLAY_IMAGE:
+                            bImage = row.getBytes("image");
+                            length = row.getInt("imagelength");
+                            break;
+                        case Convertors.DISPLAY_THUMB:
+                            bImage = row.getBytes("thumb");
+                            length = row.getInt("thumblength");
+                            break;
+                        case Convertors.DISPLAY_PROCESSED:
+                            bImage = row.getBytes("processed");
+                            length = row.getInt("processedlength");
+                            break;
+                        default: break;
                     }
+//                    if (image_type == Convertors.DISPLAY_IMAGE) {
+//                        bImage = row.getBytes("image");
+//                        length = row.getInt("imagelength");
+//                    } else if (image_type == Convertors.DISPLAY_THUMB) {
+//                        bImage = row.getBytes("thumb");
+//                        length = row.getInt("thumblength");
+//                
+//                    } else if (image_type == Convertors.DISPLAY_PROCESSED) {
+//                        bImage = row.getBytes("processed");
+//                        length = row.getInt("processedlength");
+//                    }
                     
                     type = row.getString("type");
 
