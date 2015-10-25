@@ -12,6 +12,8 @@ public class Pic {
     private int length;
     private String type;
     private java.util.UUID UUID=null;
+    private String user = null;
+    private String timestamp = null;
     
     /**
      * Constructor
@@ -43,6 +45,20 @@ public class Pic {
         this.bImage = bImage;
         this.length = length;
         this.type=type;
+    }
+    
+    public String getUser() {
+        return user;
+    }
+    public String getDate() {
+        return timestamp;
+    }
+    
+    public void setUser(String newUser) {
+        user = newUser;
+    }
+    public void setDate(String newDate) {
+        timestamp = newDate;
     }
 
     /**
