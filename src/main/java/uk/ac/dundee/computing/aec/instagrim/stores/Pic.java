@@ -2,6 +2,7 @@ package uk.ac.dundee.computing.aec.instagrim.stores;
 
 import com.datastax.driver.core.utils.Bytes;
 import java.nio.ByteBuffer;
+import java.util.Date;
 
 /*
  * Class to store pictures
@@ -13,7 +14,7 @@ public class Pic {
     private String type;
     private java.util.UUID UUID=null;
     private String user = null;
-    private String timestamp = null;
+    private Date timestamp = null;
     
     /**
      * Constructor
@@ -26,7 +27,7 @@ public class Pic {
      * @param UUID The UUID to be set to
      */
     public void setUUID(java.util.UUID UUID){
-        this.UUID =UUID;
+        this.UUID = UUID;
     }
     /**
      * Returns the picture's UUID
@@ -46,7 +47,7 @@ public class Pic {
         this.length = length;
         this.type=type;
     }
-    public void setPic(ByteBuffer bImage, int length,String type, String user, String date) {
+    public void setPic(ByteBuffer bImage, int length,String type, String user, Date date) {
         this.bImage = bImage;
         this.length = length;
         this.type = type;
@@ -57,14 +58,14 @@ public class Pic {
     public String getUser() {
         return user;
     }
-    public String getDate() {
+    public Date getDate() {
         return timestamp;
     }
     
     public void setUser(String newUser) {
         user = newUser;
     }
-    public void setDate(String newDate) {
+    public void setDate(Date newDate) {
         timestamp = newDate;
     }
 

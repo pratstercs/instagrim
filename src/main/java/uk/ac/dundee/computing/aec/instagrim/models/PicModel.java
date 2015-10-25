@@ -38,6 +38,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.awt.Color;
 import java.awt.image.WritableRaster;
+import java.util.Date;
 
 import uk.ac.dundee.computing.aec.instagrim.lib.*;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
@@ -511,7 +512,7 @@ public class PicModel {
         String type = null;
         int length = 0;
         String user = "";
-        String date = "";
+        Date date = null;
         
         try {
             Convertors convertor = new Convertors();
@@ -532,9 +533,7 @@ public class PicModel {
             }
             
             BoundStatement boundStatement = new BoundStatement(ps);
-            rs = session.execute( // this is where the query is executed
-                    boundStatement.bind( // here you are binding the 'boundStatement'
-                            picid));
+            rs = session.execute( boundStatement.bind(picid) );
 
             if (rs.isExhausted()) {
                 System.out.println("No Images returned");
@@ -558,7 +557,7 @@ public class PicModel {
                     }
                     
                     user = row.getString("user");
-                    date = row.getString("interaction_time");
+                    date = row.getDate("interaction_time");
                     type = row.getString("type");
 
                 }

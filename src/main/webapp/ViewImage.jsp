@@ -17,7 +17,7 @@
             Pic p = (Pic) request.getAttribute("picture");
             
             String user = p.getUser();
-            String date = p.getDate();
+            Date date = p.getDate();
             
             LoggedIn lg = (LoggedIn) request.getAttribute("user");
             if (lg == null) {
@@ -38,7 +38,7 @@
                     <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Image/<%=p.getSUUID()%>"></a>
                 </td>
                 <td>
-                    Posted by: <%=user%>
+                    Posted by: <%=user%> <br/>
                     At: <%=date%>
                 </td>
             </tr>
