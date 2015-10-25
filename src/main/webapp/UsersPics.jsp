@@ -69,7 +69,7 @@
                     <%
                             Pic p = (Pic) iterator.next();
                     %>
-                            <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Thumb/<%=p.getSUUID()%>"></a>
+                            <a href="/InstagrimPJP/ViewImage/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Thumb/<%=p.getSUUID()%>"></a>
                         </td>
                         <td>
                             <a href="#" onclick='submitForm("<%=p.getSUUID()%>")'>Use as profile picture</a><br/><br/>

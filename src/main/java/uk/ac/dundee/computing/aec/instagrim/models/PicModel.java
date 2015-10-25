@@ -480,12 +480,11 @@ public class PicModel {
         String[] toReturn = new String[2];
         cluster = CassandraHosts.getCluster();
         Session session = cluster.connect("instagrim_PJP");
+        java.util.UUID uuid = java.util.UUID.fromString(picid);
         
-        PreparedStatement ps = session.prepare("select user,pic_added from pics where picid =?");
+        PreparedStatement ps = session.prepare("select user,pic_added from userpiclist where picid =?");
         BoundStatement boundStatement = new BoundStatement(ps);
-            ResultSet rs = session.execute( // this is where the query is executed
-                    boundStatement.bind( // here you are binding the 'boundStatement'
-                            picid));
+            ResultSet rs = session.execute( boundStatement.bind(uuid) );
             
             Row row = rs.one();
             toReturn[0] = row.getString("user");
@@ -507,6 +506,8 @@ public class PicModel {
         ByteBuffer bImage = null;
         String type = null;
         int length = 0;
+        String user = "";
+        String date = "";
         
         try {
             Convertors convertor = new Convertors();
@@ -515,13 +516,13 @@ public class PicModel {
          
             switch(image_type) {
                 case Convertors.DISPLAY_IMAGE: 
-                    ps = session.prepare("select image,imagelength,type from pics where picid =?");
+                    ps = session.prepare("select image,imagelength,type,user,interaction_time from pics where picid =?");
                     break;
                 case Convertors.DISPLAY_THUMB:
-                    ps = session.prepare("select thumb,imagelength,thumblength,type from pics where picid =?");
+                    ps = session.prepare("select thumb,imagelength,thumblength,type,user,interaction_time from pics where picid =?");
                     break;
                 case Convertors.DISPLAY_PROCESSED:
-                    ps = session.prepare("select processed,processedlength,type from pics where picid =?");
+                    ps = session.prepare("select processed,processedlength,type,user,interaction_time from pics where picid =?");
                     break;
                 default: break;
             }
@@ -560,6 +561,8 @@ public class PicModel {
                             break;
                         default: break;
                     }
+                    user = row.getString("user");
+                    date = row.getString("interaction_time");
 //                    if (image_type == Convertors.DISPLAY_IMAGE) {
 //                        bImage = row.getBytes("image");
 //                        length = row.getInt("imagelength");
@@ -581,8 +584,9 @@ public class PicModel {
             return null;
         }
         session.close();
+        
         Pic p = new Pic();
-        p.setPic(bImage, length, type);
+        p.setPic(bImage, length, type, user, date);
         p.setUUID(picid);
 
         return p;

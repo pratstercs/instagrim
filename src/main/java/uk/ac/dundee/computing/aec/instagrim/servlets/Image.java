@@ -37,7 +37,9 @@ import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
     "/Image/*",
     "/Thumb/*",
     "/Images",
-    "/Images/*"
+    "/Images/*",
+    "/ViewImage",
+    "/ViewImage/*",
 })
 @MultipartConfig
 
@@ -58,6 +60,7 @@ public class Image extends HttpServlet {
         CommandsMap.put("Image", 1);
         CommandsMap.put("Images", 2);
         CommandsMap.put("Thumb", 3);
+        CommandsMap.put("ViewImage", 4);
     }
 
     public void init(ServletConfig config) throws ServletException {
@@ -81,7 +84,7 @@ public class Image extends HttpServlet {
         }
         switch (command) {
             case 1:
-                DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);
+                DisplayImage(Convertors.DISPLAY_PROCESSED, args[2], response);
                 break;
             case 2:
                 try {
@@ -94,9 +97,26 @@ public class Image extends HttpServlet {
             case 3:
                 DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
                 break;
+            case 4:
+                ImagePage(Convertors.DISPLAY_PROCESSED, args[2], request, response);
+                break;
             default:
                 error("Bad Operator", response);
         }
+    }
+    
+    private void ImagePage(int type, String pic, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PicModel tm = new PicModel();
+        tm.setCluster(cluster);
+        
+        Pic p = tm.getPic(type,java.util.UUID.fromString(pic));
+        //String[] data = tm.getData(pic);
+        //p.setUser(data[0]);
+        //p.setDate(data[1]);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/ViewImage.jsp");
+        request.setAttribute("picture", p);
+        rd.forward(request, response);
     }
     
     

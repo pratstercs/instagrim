@@ -46,6 +46,13 @@ public class Pic {
         this.length = length;
         this.type=type;
     }
+    public void setPic(ByteBuffer bImage, int length,String type, String user, String date) {
+        this.bImage = bImage;
+        this.length = length;
+        this.type = type;
+        this.user = user;
+        timestamp = date;
+    }
     
     public String getUser() {
         return user;
