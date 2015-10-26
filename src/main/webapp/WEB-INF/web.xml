@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app>
+    <display-name>Instagrim-PJP</display-name>
+    <description>
+      Instagrim by Philip Pratt
+    </description>
+    <context-param>
+      <param-name>Author</param-name>
+      <param-value>pjpratt@dundee.ac.uk</param-value>
+    </context-param>
+    <error-page>
+        
+        <location>/error.jsp</location>
+    </error-page>
+                
+</web-app>
