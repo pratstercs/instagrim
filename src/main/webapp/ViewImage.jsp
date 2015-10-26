@@ -38,17 +38,55 @@
                     <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Image/<%=p.getSUUID()%>"></a>
                 </td>
                 <td>
-                    Posted by: <a href="/InstagrimPJP/Profile/<%=user%>"><%=user%></a> <br/>
-                    At: <%=date%>
+                    <div class="comment">
+                        <b>Image by: <a href="/InstagrimPJP/Profile/<%=user%>"><%=user%></a></b> <br/>
+                        <span class="commentTime"><%=date%></span>
+                        <br/><br/><br/>
+                        <form method="POST" name="commentForm">
+                            <textarea id="commentBox" class="text" name="commentBox" placeholder="Write your comment here:" autofocus></textarea>
+
+                            <input name="posttype" type="hidden" value="comment">
+                            <input name="picID" type="hidden" value="<%=p.getSUUID()%>">
+
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Comment</button>
+                        </form>
+                    </div>
                     <br/><br/><br/>
-                    <form method="POST" name="commentForm">
-                        <textarea id="commentBox" class="text" name="commentBox" placeholder="Write your comment here:" autofocus></textarea>
-                        
-                        <input name="posttype" type="hidden" value="comment">
-                        <input name="picID" type="hidden" value="<%=p.getSUUID()%>">
-                        
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Comment</button>
-                    </form>
+                    <%
+                        java.util.LinkedList<Comment> commentList = (java.util.LinkedList<Comment>) request.getAttribute("comments");
+                        if (commentList == null) {
+                    %>
+                    <div class="comment">
+                        <p>No comments, yet!</p>
+                    </div>
+                    <%
+                        } else {
+                            Iterator<Comment> iterator;
+                            iterator = commentList.iterator();
+                            while (iterator.hasNext()) {
+                                Comment c = (Comment) iterator.next();
+                    %>
+                    <div class="comment">
+                        <%
+                                if( c.getUser().equals("Anonymous") ) {
+                        %>
+                        <b><i>Anonymous</i></b>
+                        <%
+                                }
+                                else {
+                        %>
+                        <b><a href="/InstagrimPJP/Profile/<%=c.getUser()%>"><%=c.getUser()%></a></b>
+                        <%
+                                }
+                        %>
+                        <br /><span class="commentTime"><%=c.getDate().toString()%><br /></span>
+                        <%=c.getCommentText()%>
+                        <br /><br />
+                    </div>
+                    <%
+                            }
+                        }
+                %>
                 </td>
             </tr>
         </table>

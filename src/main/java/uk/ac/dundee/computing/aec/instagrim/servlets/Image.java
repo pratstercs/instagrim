@@ -26,8 +26,7 @@ import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
-import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
-import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
+import uk.ac.dundee.computing.aec.instagrim.stores.*;
 
 /**
  * Servlet implementation class Image
@@ -109,13 +108,16 @@ public class Image extends HttpServlet {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
         
-        Pic p = tm.getPic(type,java.util.UUID.fromString(pic));
-        //String[] data = tm.getData(pic);
-        //p.setUser(data[0]);
-        //p.setDate(data[1]);
+        java.util.UUID picid = java.util.UUID.fromString(pic);
+        
+        Pic p = tm.getPic(type,picid);
+        java.util.LinkedList<Comment> commentList = tm.getComments(picid);
         
         RequestDispatcher rd = request.getRequestDispatcher("/ViewImage.jsp");
+        
         request.setAttribute("picture", p);
+        request.setAttribute("comments", commentList);
+        
         rd.forward(request, response);
     }
     

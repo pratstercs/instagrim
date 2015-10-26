@@ -606,7 +606,7 @@ public class PicModel {
             for(Row row : rs) {
                 String user = row.getString("user");
                 String text = row.getString("comment");
-                java.util.Date date = row.getDate("date");
+                java.util.Date date = row.getDate("when");
                 
                 Comment comment = new Comment(user,date,text,picid);
                 comments.add(comment);
