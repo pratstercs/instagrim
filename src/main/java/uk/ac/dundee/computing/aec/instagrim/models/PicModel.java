@@ -41,7 +41,7 @@ import java.awt.image.WritableRaster;
 import java.util.Date;
 
 import uk.ac.dundee.computing.aec.instagrim.lib.*;
-import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
+import uk.ac.dundee.computing.aec.instagrim.stores.*;
 //import uk.ac.dundee.computing.aec.stores.TweetStore;
 
 public class PicModel {
@@ -575,6 +575,47 @@ public class PicModel {
         p.setUUID(picid);
 
         return p;
+    }
+    
+    public void postComment(java.util.UUID picid, String comment, String user) {
+        cluster = CassandraHosts.getCluster();
+        Session session = cluster.connect("instagrim_PJP");
+        
+        PreparedStatement addComment = session.prepare("insert into comments (when, comment, picid, user) values(?,?,?,?)");
+        BoundStatement bsAddComment = new BoundStatement(addComment);
+
+        Date DateAdded = new Date();
+        session.execute(bsAddComment.bind( DateAdded, comment, picid, user ));
+        
+        session.close();
+    }
+    
+    public LinkedList<Comment> getComments(java.util.UUID picid) {
+        java.util.LinkedList<Comment> comments = new java.util.LinkedList<>();
+        
+        Session session = cluster.connect("instagrim_PJP");
+        PreparedStatement ps = session.prepare("select * from comments where picid =?");
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute( boundStatement.bind(picid) );
+        
+        if (rs.isExhausted()) {
+            System.out.println("No comments returned");
+            return null;
+        } else {
+            for(Row row : rs) {
+                String user = row.getString("user");
+                String text = row.getString("comment");
+                java.util.Date date = row.getDate("date");
+                
+                Comment comment = new Comment(user,date,text,picid);
+                comments.add(comment);
+            }
+        }
+        
+        session.close();
+        
+        return comments;
     }
 
 }

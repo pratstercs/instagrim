@@ -158,11 +158,14 @@ public class Image extends HttpServlet {
         String posttype;
         posttype = request.getParameter("posttype");
         
-        if (lg.getlogedin()){
+        if (lg == null) {
+            username = "Anonymous";
+        }
+        else if (lg.getlogedin()){
             username=lg.getUsername();
         }
         
-        if(posttype.equals("upload")) {
+        if("upload".equals(posttype)) {
             for (Part part : request.getParts() ) {
                 System.out.println("Part Name " + part.getName());
 
@@ -187,7 +190,7 @@ public class Image extends HttpServlet {
             }
             response.sendRedirect("/InstagrimPJP/Images/"+username);
         }
-        else if (posttype.equals("profilePic")) {
+        else if ("profilePic".equals(posttype)) {
             User us = new User();
             String id;
             id = request.getParameter("picID");
@@ -196,7 +199,7 @@ public class Image extends HttpServlet {
             
             response.sendRedirect("/InstagrimPJP/Profile/"+username);
         }
-        else if(posttype.equals("filter")) {
+        else if("filter".equals(posttype)) {
             String filterMode;
             filterMode = request.getParameter("filterMode");
             int mode = Integer.parseInt(filterMode);
@@ -210,6 +213,19 @@ public class Image extends HttpServlet {
             
             
             response.sendRedirect("/InstagrimPJP/Images/"+username);
+        }
+        else if("comment".equals(posttype)) {
+            System.out.println("Comment recieved");
+            
+            String picID = request.getParameter("picID");
+            String comment = request.getParameter("commentBox");
+            java.util.UUID uuid = java.util.UUID.fromString(picID);
+            
+            PicModel tm = new PicModel();
+            tm.setCluster(cluster);
+            tm.postComment(uuid, comment, username);
+            
+            response.sendRedirect("/InstagrimPJP/ViewImage/" + picID);
         }
     }
 

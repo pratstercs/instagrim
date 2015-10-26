@@ -38,8 +38,17 @@
                     <a href="/InstagrimPJP/Image/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Image/<%=p.getSUUID()%>"></a>
                 </td>
                 <td>
-                    Posted by: <%=user%> <br/>
+                    Posted by: <a href="/InstagrimPJP/Profile/<%=user%>"><%=user%></a> <br/>
                     At: <%=date%>
+                    <br/><br/><br/>
+                    <form method="POST" name="commentForm">
+                        <textarea id="commentBox" class="text" name="commentBox" placeholder="Write your comment here:" autofocus></textarea>
+                        
+                        <input name="posttype" type="hidden" value="comment">
+                        <input name="picID" type="hidden" value="<%=p.getSUUID()%>">
+                        
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Comment</button>
+                    </form>
                 </td>
             </tr>
         </table>
