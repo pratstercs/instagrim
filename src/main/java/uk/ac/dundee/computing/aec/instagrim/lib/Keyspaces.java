@@ -43,7 +43,7 @@ public final class Keyspaces {
                     + "  );";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim_PJP.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
-                     + "     password text,\n"
+                    + "      password text,\n"
                     + "      first_name text,\n"
                     + "      last_name text,\n"
                     + "      email text,\n"
@@ -51,6 +51,15 @@ public final class Keyspaces {
                     + "      bio text,\n"
                     + "      profilePicId uuid,\n"
                     + "  );";
+            String CreateComments = "CREATE TABLE if not exists instagrim_PJP.comments (\n"
+                    + "     picid uuid,\n"
+                    + "     user varchar,\n"
+                    + "     when timestamp,\n"
+                    + "     comment text,\n"
+                    + "     PRIMARY KEY (when)\n"
+                    + " );";
+            String CommentIndex = "CREATE INDEX IF NOT EXISTS pic ON instagrim_pjp.comments (picid);";
+            
             Session session = c.connect();
             try {
                 PreparedStatement statement = session
@@ -94,6 +103,20 @@ public final class Keyspaces {
                 session.execute(cqlQuery);
             } catch (Exception et) {
                 System.out.println("Can't create Address Profile " + et);
+            }
+            System.out.println("" + CreateComments);
+            try {
+                SimpleStatement cqlQuery = new SimpleStatement(CreateComments);
+                session.execute(cqlQuery);
+            } catch (Exception et) {
+                System.out.println("Can't create Comments " + et);
+            }
+            try {
+                SimpleStatement cqlQuery = new SimpleStatement(CommentIndex);
+                session.execute(cqlQuery);
+            }
+            catch (Exception e) {
+                System.out.println("Can't create index on comments");
             }
             session.close();
 
