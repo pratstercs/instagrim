@@ -58,6 +58,7 @@ public class Image extends HttpServlet {
         CommandsMap.put("ViewImage", 4);
     }
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -67,6 +68,7 @@ public class Image extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         String args[] = Convertors.SplitRequestPath(request);
@@ -147,11 +149,77 @@ public class Image extends HttpServlet {
         }
         out.close();
     }
+    
+    private void upload(HttpServletRequest request, HttpServletResponse response, String username) throws ServletException, IOException {
+        for (Part part : request.getParts() ) {
+            System.out.println("Part Name " + part.getName());
 
+            String type = part.getContentType();
+            String filename = part.getSubmittedFileName();
+
+            InputStream is = request.getPart(part.getName()).getInputStream();
+            int i = is.available();
+            int mode = PicModel.NORMAL;
+
+
+            if (i > 0) {
+                byte[] b = new byte[i + 1];
+                is.read(b);
+                System.out.println("Length : " + b.length);
+                PicModel tm = new PicModel();
+                tm.setCluster(cluster);
+                tm.insertPic(b, type, filename, username, mode);
+
+                is.close();
+            }
+        }
+        response.sendRedirect("/InstagrimPJP/Images/"+username);
+    }
+
+    private void setProfilePic(HttpServletRequest request, HttpServletResponse response, String username, LoggedIn lg) throws IOException {
+        User us = new User();
+        String id;
+        id = request.getParameter("picID");
+        lg.setProfilePic(id);
+        us.updateUser(lg);
+
+        response.sendRedirect("/InstagrimPJP/Profile/"+username);
+    }
+    
+    private void filter(HttpServletRequest request, HttpServletResponse response, String username) throws IOException {
+        String filterMode;
+        filterMode = request.getParameter("filterMode");
+        int mode = Integer.parseInt(filterMode);
+        String picID = request.getParameter("picID");
+
+        PicModel tm = new PicModel();
+        Pic pic = tm.getPic(Convertors.DISPLAY_IMAGE, java.util.UUID.fromString(picID));
+
+        tm.setCluster(cluster);
+        tm.insertPic(pic.getBytes(), pic.getType(), pic.getSUUID(), username, mode);
+
+
+        response.sendRedirect("/InstagrimPJP/Images/"+username);
+    }
+    
+    private void comment(HttpServletRequest request, HttpServletResponse response, String username) throws IOException {
+        System.out.println("Comment recieved");
+
+        String picID = request.getParameter("picID");
+        String comment = request.getParameter("commentBox");
+        java.util.UUID uuid = java.util.UUID.fromString(picID);
+
+        PicModel tm = new PicModel();
+        tm.setCluster(cluster);
+        tm.postComment(uuid, comment, username);
+
+        response.sendRedirect("/InstagrimPJP/ViewImage/" + picID);
+    }
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
-        LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
+        LoggedIn lg = (LoggedIn)session.getAttribute("LoggedIn");
         String username="majed";
         String posttype;
         posttype = request.getParameter("posttype");
@@ -163,67 +231,19 @@ public class Image extends HttpServlet {
             username=lg.getUsername();
         }
         
-        if("upload".equals(posttype)) {
-            for (Part part : request.getParts() ) {
-                System.out.println("Part Name " + part.getName());
-
-                String type = part.getContentType();
-                String filename = part.getSubmittedFileName();
-
-                InputStream is = request.getPart(part.getName()).getInputStream();
-                int i = is.available();
-                int mode = PicModel.NORMAL;
-                
-                
-                if (i > 0) {
-                    byte[] b = new byte[i + 1];
-                    is.read(b);
-                    System.out.println("Length : " + b.length);
-                    PicModel tm = new PicModel();
-                    tm.setCluster(cluster);
-                    tm.insertPic(b, type, filename, username, mode);
-
-                    is.close();
-                }
-            }
-            response.sendRedirect("/InstagrimPJP/Images/"+username);
-        }
-        else if ("profilePic".equals(posttype)) {
-            User us = new User();
-            String id;
-            id = request.getParameter("picID");
-            lg.setProfilePic(id);
-            us.updateUser(lg);
-            
-            response.sendRedirect("/InstagrimPJP/Profile/"+username);
-        }
-        else if("filter".equals(posttype)) {
-            String filterMode;
-            filterMode = request.getParameter("filterMode");
-            int mode = Integer.parseInt(filterMode);
-            String picID = request.getParameter("picID");
-            
-            PicModel tm = new PicModel();
-            Pic pic = tm.getPic(Convertors.DISPLAY_IMAGE, java.util.UUID.fromString(picID));
-            
-            tm.setCluster(cluster);
-            tm.insertPic(pic.getBytes(), pic.getType(), pic.getSUUID(), username, mode);
-            
-            
-            response.sendRedirect("/InstagrimPJP/Images/"+username);
-        }
-        else if("comment".equals(posttype)) {
-            System.out.println("Comment recieved");
-            
-            String picID = request.getParameter("picID");
-            String comment = request.getParameter("commentBox");
-            java.util.UUID uuid = java.util.UUID.fromString(picID);
-            
-            PicModel tm = new PicModel();
-            tm.setCluster(cluster);
-            tm.postComment(uuid, comment, username);
-            
-            response.sendRedirect("/InstagrimPJP/ViewImage/" + picID);
+        switch(posttype) {
+            case "upload":
+                upload(request, response, username);
+                break;
+            case "profilePic":
+                setProfilePic(request, response, username, lg);
+                break;
+            case "filter":
+                filter(request, response, username);
+                break;
+            case "comment":
+                comment(request, response, username);
+                break;
         }
     }
 
