@@ -1,37 +1,20 @@
 package uk.ac.dundee.computing.aec.instagrim.models;
 
 import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.querybuilder.*;
-//import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-//import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
-//import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 import com.datastax.driver.core.Cluster;
-//import java.io.IOException;
-//import java.io.PrintWriter;
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletConfig;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-//import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
-//import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import com.datastax.driver.core.UDTValue;
 import com.datastax.driver.core.UserType;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
-//import com.datastax.driver.core.UserType;
 import java.util.Map;
 import java.util.HashMap;
 

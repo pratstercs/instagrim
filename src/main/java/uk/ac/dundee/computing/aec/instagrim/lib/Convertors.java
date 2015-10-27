@@ -2,9 +2,7 @@ package uk.ac.dundee.computing.aec.instagrim.lib;
 
 import java.net.URLDecoder;
 import java.util.StringTokenizer;
-//import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
-//import com.eaio.uuid.UUID;
 
 public final class Convertors {
     public final static int DISPLAY_IMAGE = 0;
