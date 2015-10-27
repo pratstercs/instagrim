@@ -20,7 +20,7 @@
                 var type = document.getElementById('posttype');
                 
                 box.value = picID;
-                type.value = "profilePic"
+                type.value = "profilePic";
                 
                 document.getElementById('form').submit();
             }
@@ -29,7 +29,7 @@
                 var type = document.getElementById('posttype');
                 
                 box.value = picID;
-                type.value = "filter"
+                type.value = "filter";
                 
                 document.getElementById('form').submit();
             }
@@ -43,11 +43,10 @@
         <nav>
             <ul>
                 <li class="nav"><a href="/InstagrimPJP/upload.jsp">Upload</a></li>
-                <li class="nav"><ul><a href="/InstagrimPJP">Home</a></ul></li>
+                <li class="nav"><a href="/InstagrimPJP">Home</a></li>
             </ul>
         </nav>
  
-        <article>
             <h2>Your Pics</h2>
             <form id="form" action="Image" method="POST" class="form-horizontal" role="form">
                 <%
@@ -89,8 +88,7 @@
                         }
                     }
             %>
-        </table>
-        </article>
+            </table>
             <input name="posttype" id="posttype" value="profilePic" type="hidden">
             <input name="picID" id="picID" value="" type="hidden">
         </form>

@@ -23,7 +23,6 @@
             <div class="card hovercard">
                 <div class="card-background">
                     <img class="card-bkimg" alt="" src="/InstagrimPJP/assets/bg.png">
-                    <!-- http://lorempixel.com/850/280/people/9/ -->
                 </div>
                 <div class="useravatar">
                     <img alt="" src="/InstagrimPJP/assets/instagrim.png">
@@ -35,7 +34,7 @@
             <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
                 <div class="btn-group" role="group">
                     <a href="upload.jsp">
-                        <button type="button" id="upload" class="btn btn-default"><span class=" glyphicon glyphicon-upload" aria-hidden="true"></span>
+                        <button type="button" id="upload" class="btn btn-default" /><span class=" glyphicon glyphicon-upload" aria-hidden="true"></span>
                             <div class="hidden-xs">Upload</div>
                         </button>
                     </a>
@@ -80,7 +79,7 @@
                     </a>
                 </div>
                 <div class="btn-group" role="group">
-                    <a href="login.jsp"
+                    <a href="login.jsp">
                         <button type="button" id="login" class="btn btn-primary"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                             <div class="hidden-xs">Login</div>
                         </button>
