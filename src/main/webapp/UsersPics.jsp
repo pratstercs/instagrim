@@ -88,8 +88,8 @@
                                     <option value="4">Invert</option>
                                     <option value="5">Lighten</option>
                                     <option value="6">Darken</option>
-                                </select><br /><br />
-                                <!--<button onclick='applyFilter("<%=p.getSUUID()%>", <%=picNum%>)'>Apply Filter</button>-->
+                                </select>
+                                <br /><br />
                         </td>
                     </tr> 
             <%
