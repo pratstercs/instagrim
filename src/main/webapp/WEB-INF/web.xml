@@ -10,7 +10,6 @@
       <param-value>pjpratt@dundee.ac.uk</param-value>
     </context-param>
     <error-page>
-        
         <location>/error.jsp</location>
     </error-page>
                 
