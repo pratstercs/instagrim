@@ -19,7 +19,7 @@
     </head>
     <body>
         
-        <div id="cardBox" class="col-lg-6 col-sm-6">
+        <div id="cardBox">
             <div class="card hovercard">
                 <div class="card-background">
                     <img class="card-bkimg" alt="" src="/InstagrimPJP/assets/bg.png">
