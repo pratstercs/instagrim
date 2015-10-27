@@ -24,12 +24,18 @@
                 
                 document.getElementById('form').submit();
             }
-            function applyFilter(picID) {
+            function applyFilter(picID, picNum) {
                 var box = document.getElementById('picID');
                 var type = document.getElementById('posttype');
+                var mode = document.getElementById('filterMode');
+                
+                var formNum = "filterMode" + picNum;
+                
+                var modeFrom = document.getElementById(formNum);
                 
                 box.value = picID;
                 type.value = "filter";
+                mode.value = modeFrom.value;
                 
                 document.getElementById('form').submit();
             }
@@ -48,7 +54,6 @@
         </nav>
  
             <h2>Your Pics</h2>
-            <form id="form" action="Image" method="POST" class="form-horizontal" role="form">
                 <%
                     java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
                     if (lsPics == null) {
@@ -59,9 +64,11 @@
                 %>
                 <table border="0">
                     <%
+                        int picNum = -1;
                         Iterator<Pic> iterator;
                         iterator = lsPics.iterator();
                         while (iterator.hasNext()) {
+                            picNum++;
                     %>
                             <tr>
                                 <td>
@@ -71,17 +78,18 @@
                             <a href="/InstagrimPJP/ViewImage/<%=p.getSUUID()%>" ><img src="/InstagrimPJP/Thumb/<%=p.getSUUID()%>"></a>
                         </td>
                         <td>
-                            <a href="#" onclick='submitForm("<%=p.getSUUID()%>")'>Use as profile picture</a><br/><br/>
-                            Select filter to apply:
-                            <select name="filterMode" id="filterMode" onchange='applyFilter("<%=p.getSUUID()%>")'>
-                                <option selected="selected" value="0"></option>
-                                <option value="1">Greyscale</option>
-                                <option value="2">Sickeningly Pink</option>
-                                <option value="3">Sepia</option>
-                                <option value="4">Invert</option>
-                                <option value="5">Lighten</option>
-                                <option value="6">Darken</option>
-                            </select><br /><br />
+                                <a href="#" onclick='submitForm("<%=p.getSUUID()%>")'>Use as profile picture</a><br/><br/>
+                                Select filter to apply:
+                                <select name="filterModePic" id="filterMode<%=picNum%>" onchange='applyFilter("<%=p.getSUUID()%>", <%=picNum%>)'>
+                                    <option selected="selected" value="0"></option>
+                                    <option value="1">Greyscale</option>
+                                    <option value="2">Sickeningly Pink</option>
+                                    <option value="3">Sepia</option>
+                                    <option value="4">Invert</option>
+                                    <option value="5">Lighten</option>
+                                    <option value="6">Darken</option>
+                                </select><br /><br />
+                                <!--<button onclick='applyFilter("<%=p.getSUUID()%>", <%=picNum%>)'>Apply Filter</button>-->
                         </td>
                     </tr> 
             <%
@@ -89,8 +97,10 @@
                     }
             %>
             </table>
-            <input name="posttype" id="posttype" value="profilePic" type="hidden">
-            <input name="picID" id="picID" value="" type="hidden">
-        </form>
+            <form id="form" action="Image" method="POST" class="form-horizontal" role="form">
+                <input name="posttype" id="posttype" value="profilePic" type="hidden">
+                <input name="picID" id="picID" value="" type="hidden">
+                <input name="filterMode" id="filterMode" value="" type="hidden">
+            </form>
     </body>
 </html>
