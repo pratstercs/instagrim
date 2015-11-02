@@ -18,7 +18,7 @@ public class Index {
 
     public static String getPic() {
         Cluster cluster = CassandraHosts.getCluster();
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         
         PreparedStatement ps = session.prepare("select * from userpiclist LIMIT 1");
         BoundStatement boundStatement = new BoundStatement(ps);

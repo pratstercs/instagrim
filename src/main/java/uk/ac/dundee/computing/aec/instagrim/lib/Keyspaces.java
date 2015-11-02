@@ -14,8 +14,8 @@ public final class Keyspaces {
      */
     public static void SetUpKeySpaces(Cluster c) {
         try {
-            String createkeyspace = "create keyspace if not exists instagrim_PJP  WITH replication = {'class':'SimpleStrategy', 'replication_factor':1}";
-            String CreatePicTable = "CREATE TABLE if not exists instagrim_PJP.Pics ("
+            String createkeyspace = "create keyspace if not exists instagrimPJP  WITH replication = {'class':'SimpleStrategy', 'replication_factor':1}";
+            String CreatePicTable = "CREATE TABLE if not exists instagrimPJP.Pics ("
                     + " user varchar,"
                     + " picid uuid, "
                     + " interaction_time timestamp,"
@@ -30,18 +30,18 @@ public final class Keyspaces {
                     + " name  varchar,"
                     + " PRIMARY KEY (picid)"
                     + ")";
-            String Createuserpiclist = "CREATE TABLE if not exists instagrim_PJP.userpiclist (\n"
+            String Createuserpiclist = "CREATE TABLE if not exists instagrimPJP.userpiclist (\n"
                     + "picid uuid,\n"
                     + "user varchar,\n"
                     + "pic_added timestamp,\n"
                     + "PRIMARY KEY (user,pic_added)\n"
                     + ") WITH CLUSTERING ORDER BY (pic_added desc);";
-            String CreateAddressType = "CREATE TYPE if not exists instagrim_PJP.address (\n"
+            String CreateAddressType = "CREATE TYPE if not exists instagrimPJP.address (\n"
                     + "      street text,\n"
                     + "      city text,\n"
                     + "      postcode text\n"
                     + "  );";
-            String CreateUserProfile = "CREATE TABLE if not exists instagrim_PJP.userprofiles (\n"
+            String CreateUserProfile = "CREATE TABLE if not exists instagrimPJP.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
                     + "      password text,\n"
                     + "      first_name text,\n"
@@ -51,7 +51,7 @@ public final class Keyspaces {
                     + "      bio text,\n"
                     + "      profilePicId uuid,\n"
                     + "  );";
-            String CreateComments = "CREATE TABLE if not exists instagrim_PJP.comments (\n"
+            String CreateComments = "CREATE TABLE if not exists instagrimPJP.comments (\n"
                     + "     picid uuid,\n"
                     + "     user varchar,\n"
                     + "     when timestamp,\n"
@@ -68,9 +68,9 @@ public final class Keyspaces {
                         statement);
                 ResultSet rs = session
                         .execute(boundStatement);
-                System.out.println("created instagrim_PJP ");
+                System.out.println("created instagrimPJP ");
             } catch (Exception et) {
-                System.out.println("Can't create instagrim_PJP " + et);
+                System.out.println("Can't create instagrimPJP " + et);
             }
 
             //now add some column families 

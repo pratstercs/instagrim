@@ -34,15 +34,15 @@ public class User {
     
     public boolean updateUser(String username, String firstName, String lastName, String email, String[] address, java.util.UUID profilePic) {
         cluster = CassandraHosts.getCluster();
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         
         try {
-            UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrim_PJP").getUserType("address"); //get actual UDTValue type
+            UserType addressUDT = session.getCluster().getMetadata().getKeyspace("instagrimPJP").getUserType("address"); //get actual UDTValue type
             UDTValue addressDB = addressUDT.newValue().setString("street", address[0]).setString("city", address[1]).setString("postcode",address[2]); //make new addressUDT
             Map<String, UDTValue> addressMap = new HashMap<String, UDTValue>(); //make map to hold addressUDT
             addressMap.put("Home", addressDB); //put into map
         
-        Statement st = QueryBuilder.update("instagrim_PJP","userprofiles")
+        Statement st = QueryBuilder.update("instagrimPJP","userprofiles")
                 .with(
                             QueryBuilder.set("first_name",firstName))
                        .and(QueryBuilder.set("last_name",lastName))
@@ -74,7 +74,7 @@ public class User {
             System.out.println("Can't encode your password");
             return false;
         }
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         PreparedStatement ps = session.prepare("insert into userprofiles (login,password,email) Values(?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -99,7 +99,7 @@ public class User {
     public LoggedIn getUserData(LoggedIn lg) throws NullPointerException {
         String username = lg.getUsername();
         
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         PreparedStatement ps = session.prepare("select * from userprofiles where login =?");
         BoundStatement boundStatement = new BoundStatement(ps);
         ResultSet rs = session.execute( boundStatement.bind(username) );
@@ -165,7 +165,7 @@ public class User {
             return toReturn;
         }
         
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         PreparedStatement ps = session.prepare("select password from userprofiles where login =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);

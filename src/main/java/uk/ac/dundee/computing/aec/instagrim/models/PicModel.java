@@ -82,7 +82,7 @@ public class PicModel {
             ByteBuffer processedbuf = ByteBuffer.wrap(processedb);
             
             int processedlength=b.length;
-            Session session = cluster.connect("instagrim_PJP");
+            Session session = cluster.connect("instagrimPJP");
 
             PreparedStatement psInsertPic = session.prepare("insert into pics ( picid, image,thumb,processed, user, interaction_time,imagelength,thumblength,processedlength,type,name) values(?,?,?,?,?,?,?,?,?,?,?)");
             PreparedStatement psInsertPicToUser = session.prepare("insert into userpiclist ( picid, user, pic_added) values(?,?,?)");
@@ -109,7 +109,7 @@ public class PicModel {
      */
     public java.util.LinkedList<Pic> getPicsForUser(String User) {
         java.util.LinkedList<Pic> Pics = new java.util.LinkedList<>();
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         PreparedStatement ps = session.prepare("select picid from userpiclist where user =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -137,7 +137,7 @@ public class PicModel {
     public String[] getData(String picid) {
         String[] toReturn = new String[2];
         cluster = CassandraHosts.getCluster();
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         java.util.UUID uuid = java.util.UUID.fromString(picid);
         
         PreparedStatement ps = session.prepare("select user,pic_added from userpiclist where picid =?");
@@ -161,7 +161,7 @@ public class PicModel {
      */
     public Pic getPic(int image_type, java.util.UUID picid) {
         cluster = CassandraHosts.getCluster();
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         
         ByteBuffer bImage = null;
         String type = null;
@@ -234,7 +234,7 @@ public class PicModel {
     
     public void postComment(java.util.UUID picid, String comment, String user) {
         cluster = CassandraHosts.getCluster();
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         
         PreparedStatement addComment = session.prepare("insert into comments (when, comment, picid, user) values(?,?,?,?)");
         BoundStatement bsAddComment = new BoundStatement(addComment);
@@ -248,7 +248,7 @@ public class PicModel {
     public LinkedList<Comment> getComments(java.util.UUID picid) {
         java.util.LinkedList<Comment> comments = new java.util.LinkedList<>();
         
-        Session session = cluster.connect("instagrim_PJP");
+        Session session = cluster.connect("instagrimPJP");
         PreparedStatement ps = session.prepare("select * from comments where picid =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
